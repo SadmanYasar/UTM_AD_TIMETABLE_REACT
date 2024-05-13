@@ -4,10 +4,22 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import { Button } from "@/components/ui/button"
-import { createFileRoute } from "@tanstack/react-router"
+import { isAuthenticated } from "@/lib/utils"
+import { createFileRoute, redirect } from "@tanstack/react-router"
 
 export const Route = createFileRoute('/profile')({
     component: Component,
+    beforeLoad: async ({ location }) => {
+        if (!isAuthenticated()) {
+            throw redirect({
+                to: '/login',
+                search: {
+                    // Use the current location to power a redirect after login
+                    redirect: location.href,
+                },
+            })
+        }
+    },
 })
 
 export default function Component() {
