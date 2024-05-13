@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button"
+import SessionSemesterLoadingTable from "@/components/ui/loading/session_semester_loading"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { isAuthenticated } from "@/lib/utils"
-import { AppStorage, User, logout } from "@/services/auth"
 import { SesiSemester, SesiSemesterResponse, fetchSesiSemester } from "@/services/session_semester"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
 
 export const Route = createFileRoute('/session_semester')({
     component: Component,
@@ -29,7 +28,9 @@ export default function Component() {
     })
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return (
+            <SessionSemesterLoadingTable />
+        )
     }
 
     if (error) {
