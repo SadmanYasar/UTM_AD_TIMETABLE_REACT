@@ -10,11 +10,6 @@ export const Route = createFileRoute('/routine')({
     component: Component,
 })
 
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/yHlnkTRSjgQ
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
 
 export default function Component() {
@@ -22,7 +17,7 @@ export default function Component() {
         <div className="grid gap-4">
             <div className="flex items-center gap-2">
                 <div className="w-12 h-12" />
-                <div className="grid grid-rows-2 items-center gap-1">
+                <div className="grid items-center grid-rows-2 gap-1">
                     <h1 className="text-2xl font-bold tracking-tighter">Fall 2024</h1>
                     <p className="text-sm font-medium tracking-wide text-gray-500 dark:text-gray-400">Class Schedule</p>
                 </div>
@@ -43,7 +38,7 @@ export default function Component() {
                         <TableRow>
                             <TableCell className="font-medium">8:00 AM</TableCell>
                             <TableCell>
-                                <div className="grid grid-cols-2 items-center gap-2">
+                                <div className="grid items-center grid-cols-2 gap-2">
                                     <div>SECJ2112</div>
                                 </div>
                             </TableCell>
