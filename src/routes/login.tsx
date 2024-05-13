@@ -5,13 +5,34 @@
  */
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useState } from "react"
+import { login } from "@/services/auth"
+import { Router } from "@tanstack/react-router"
 
 export const Route = createFileRoute('/login')({
     component: Component,
 })
 
 export default function Component() {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        try {
+            await login(username, password)
+            //navigate to "/profile" route
+            navigate({
+                to: '/profile'
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center justify-center">
             <div className="w-full max-w-md">
@@ -30,29 +51,21 @@ export default function Component() {
                     <div className="grid grid-cols-1 gap-4 p-4">
                         {/* <div className="border-r border-gray-200"> */}
                         <h3 className="text-lg font-semibold text-center mb-4">STAFF/STUDENT</h3>
-                        <form className="space-y-4">
+                        <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="login">
                                     Login:
                                 </label>
-                                <Input id="login" placeholder="Your login" required />
+                                <Input id="login" placeholder="Your login" value={username} onChange={(e) => setUsername(e.target.value)} required />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="password">
                                     Password:
                                 </label>
-                                <Input id="password" placeholder="Your password" type="password" required />
+                                <Input id="password" placeholder="Your password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
                             </div>
                             <Button type="submit" className="w-full">Submit</Button>
                         </form>
-                        {/* </div> */}
-                        {/* <div className="flex flex-col items-center justify-center">
-                            <h3 className="text-lg font-semibold mb-4">VISITORS</h3>
-                            <p className="text-sm text-center mb-4">Content access is limited to information display only.</p>
-                            <Button className="w-full" variant="outline">
-                                Sign in
-                            </Button>
-                        </div> */}
                     </div>
                 </div>
                 <p className="text-xs text-center text-gray-600 mt-6">

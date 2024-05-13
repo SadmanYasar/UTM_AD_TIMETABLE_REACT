@@ -1,7 +1,6 @@
 import React, { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { ErrorComponent, RouterProvider, createRouter } from '@tanstack/react-router'
-import { ErrorBoundary } from 'react-error-boundary';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './index.css'
 

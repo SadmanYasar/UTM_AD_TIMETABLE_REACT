@@ -5,7 +5,8 @@
  */
 import { Button } from "@/components/ui/button"
 import { isAuthenticated } from "@/lib/utils"
-import { createFileRoute, redirect } from "@tanstack/react-router"
+import { logout } from "@/services/auth"
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
 
 export const Route = createFileRoute('/profile')({
     component: Component,
@@ -23,6 +24,10 @@ export const Route = createFileRoute('/profile')({
 })
 
 export default function Component() {
+    const navigate = useNavigate()
+
+    
+
     return (
         <div className="grid min-h-screen gap-4 p-4 lg:grid-cols-2 lg:gap-0">
             <div className="space-y-4">
@@ -65,6 +70,13 @@ export default function Component() {
                     width="150"
                 />
             </div>
+            {/* A button that calls a function */}
+            <Button onClick={() => {
+                logout()
+                navigate({
+                    to: '/login'
+                })
+            }}>Logout</Button>
         </div>
     )
 }
