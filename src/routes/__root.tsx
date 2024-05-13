@@ -20,6 +20,12 @@ export const Route = createRootRoute({
             return (
                 <>
                     <Outlet />
+                    {/* 
+                    <Suspense>
+                    <TanStackRouterDevtools position="bottom-right" />
+                    </Suspense>
+                    <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-right" /> 
+                    */}
                 </>
             )
         } else {
@@ -30,13 +36,12 @@ export const Route = createRootRoute({
                             Profile
                         </Link>{' '}
                         <Link to="/routine" className="[&.active]:font-bold">
-                            Timetable
+                            Routine
                         </Link>{' '}
                         <Link to="/analysis" className="[&.active]:font-bold">
                             Course
                         </Link>{' '}
                     </div>
-                    <hr />
                     <Outlet />
                     {/* 
                     <Suspense>

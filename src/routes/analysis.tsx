@@ -19,7 +19,7 @@ export default function Component() {
             <div className="border-t border-gray-200 dark:border-gray-800">
                 <div className="mx-auto max-w-5xl grid gap-4">
                     <div className="flex flex-col gap-2">
-                        <div className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
+                        <div className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400 mt-5">
                             Faculty of Computing
                         </div>
                         <div className="text-base font-semibold tracking-wide">Universiti Teknologi Malaysia</div>

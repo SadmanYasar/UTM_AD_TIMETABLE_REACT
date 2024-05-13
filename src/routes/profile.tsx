@@ -5,8 +5,9 @@
  */
 import { Button } from "@/components/ui/button"
 import { isAuthenticated } from "@/lib/utils"
-import { logout } from "@/services/auth"
+import { AppStorage, User, logout } from "@/services/auth"
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import { useEffect, useState } from "react"
 
 export const Route = createFileRoute('/profile')({
     component: Component,
@@ -25,50 +26,43 @@ export const Route = createFileRoute('/profile')({
 
 export default function Component() {
     const navigate = useNavigate()
+    const [data, setData] = useState<AppStorage | null>(null)
 
-    
+    useEffect(() => {
+        //get from sessionStorage then set to data
+        const user = sessionStorage.getItem('web_fc_utm_my_ttms')
+        if (user) {
+            setData(JSON.parse(user))
+        }
+    }, [])
 
     return (
-        <div className="grid min-h-screen gap-4 p-4 lg:grid-cols-2 lg:gap-0">
+        <div className="flex flex-col min-h-screen mx-auto max-w-2xl gap-4 p-4">
+            <div className="border-t flex items-center justify-center p-6 lg:border-t-0 lg:p-10">
+                <img
+                    alt="University Logo"
+                    className="mb-4 w-48 object-cover"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdExRbVfBQxzHmteLr1aZzLLmaKfv81HZJ4HMFEpH72Q&s"
+                />
+            </div>
             <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                    <Button className="lg:hidden" variant="outline">
-                        <ChevronLeftIcon className="w-4 h-4 mr-2" />
-                        Back
-                    </Button>
                     <h1 className="text-2xl font-bold">Profile</h1>
                 </div>
                 <div className="space-y-2">
                     <div className="grid gap-0.5">
                         <div className="text-sm font-medium text-gray-500">Name</div>
-                        <div className="font-medium">Sadman Yasar Sayem</div>
+                        <div className="font-medium">{data?.user_auth?.full_name}</div>
                     </div>
                     <div className="grid gap-0.5">
                         <div className="text-sm font-medium text-gray-500">Matric Number</div>
-                        <div className="font-medium">A21EC3052</div>
+                        <div className="font-medium">{data?.user_auth.login_name}</div>
                     </div>
                     <div className="grid gap-0.5">
-                        <div className="text-sm font-medium text-gray-500">Session</div>
-                        <div className="font-medium">2023/2024</div>
-                    </div>
-                    <div className="grid gap-0.5">
-                        <div className="text-sm font-medium text-gray-500">Year of Study</div>
-                        <div className="font-medium">3rd Year</div>
+                        <div className="text-sm font-medium text-gray-500">Description</div>
+                        <div className="font-medium">{data?.user_auth.description}</div>
                     </div>
                 </div>
-            </div>
-            <div className="border-t flex items-center justify-center p-6 lg:border-t-0 lg:p-10">
-                <img
-                    alt="Profile picture"
-                    className="rounded-full"
-                    height="150"
-                    src="https://avatars.githubusercontent.com/u/67522140?v=4"
-                    style={{
-                        aspectRatio: "150/150",
-                        objectFit: "cover",
-                    }}
-                    width="150"
-                />
             </div>
             {/* A button that calls a function */}
             <Button onClick={() => {
