@@ -33,10 +33,10 @@ export default function Component() {
 
     return (
         <div className="flex flex-col min-h-screen mx-auto max-w-2xl gap-4 p-4">
-            <div className="border-t flex items-center justify-center p-6 lg:border-t-0 lg:p-10">
+            <div className="border-t flex items-center justify-center p-6 lg:border-t-0">
                 <img
                     alt="University Logo"
-                    className="mb-4 w-48 object-cover"
+                    className="w-48 object-cover"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdExRbVfBQxzHmteLr1aZzLLmaKfv81HZJ4HMFEpH72Q&s"
                 />
             </div>

@@ -36,13 +36,13 @@ export default function Component() {
                 <div className="border border-gray-200 bg-white shadow-sm rounded-md dark:border-gray-800 dark:bg-gray-950 dark:shadow-md">
                     <div className="overflow-auto">
                         <Tabs>
-                            <TabsList className="flex-1 grid w-full grid-cols-4">
+                            {/* <TabsList className="flex-1 grid w-full grid-cols-4">
                                 <TabsTrigger index={0}>Time & Space</TabsTrigger>
                                 <TabsTrigger index={1}>Subject</TabsTrigger>
                                 <TabsTrigger index={2}>Student</TabsTrigger>
                                 <TabsTrigger index={3}>Lecturer</TabsTrigger>
-                            </TabsList>
-                            <div>
+                            </TabsList> */}
+                            {/* <div>
                                 <div className="p-4">
                                     <div className="grid w-full gap-4 md:grid-cols-2">
                                         <div className="flex items-center gap-4">
@@ -104,7 +104,7 @@ export default function Component() {
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div>
                                 <div className="p-4">Subject</div>
                             </div>
