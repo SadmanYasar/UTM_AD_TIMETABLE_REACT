@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SessionsemesterImport } from './routes/session_semester'
 import { Route as RoutineImport } from './routes/routine'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
@@ -18,6 +19,11 @@ import { Route as AnalysisImport } from './routes/analysis'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const SessionsemesterRoute = SessionsemesterImport.update({
+  path: '/session_semester',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const RoutineRoute = RoutineImport.update({
   path: '/routine',
@@ -68,6 +74,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutineImport
       parentRoute: typeof rootRoute
     }
+    '/session_semester': {
+      preLoaderRoute: typeof SessionsemesterImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -79,6 +89,7 @@ export const routeTree = rootRoute.addChildren([
   LoginRoute,
   ProfileRoute,
   RoutineRoute,
+  SessionsemesterRoute,
 ])
 
 /* prettier-ignore-end */

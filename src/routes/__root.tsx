@@ -31,9 +31,12 @@ export const Route = createRootRoute({
         } else {
             return (
                 <>
-                    <div className="p-2 flex gap-2">
+                    <div className="p-2 flex gap-2 justify-center bg-opacity-50 backdrop-filter backdrop-blur-lg">
                         <Link to="/profile" className="[&.active]:font-bold">
                             Profile
+                        </Link>{' '}
+                        <Link to="/session_semester" className="[&.active]:font-bold">
+                            Session/Semester
                         </Link>{' '}
                         <Link to="/routine" className="[&.active]:font-bold">
                             Routine
