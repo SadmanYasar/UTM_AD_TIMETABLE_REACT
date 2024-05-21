@@ -38,11 +38,11 @@ export function SubjectCard({
                         </svg>
                     </div>
 
-                    <h1 className="font-bold text-xl text-white mb-4 relative z-50">
+                    <h1 className="font-bold text-xl text-white mb-4 relative z-10">
                         {nama_subjek}
                     </h1>
 
-                    <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
                         {kod_subjek}
                     </p>
 
@@ -56,7 +56,7 @@ export function SubjectCard({
             </div>
             <AnimatePresence>
                 {isOpen && (
-                    <Dialog static open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+                    <Dialog static open={isOpen} onClose={() => setIsOpen(false)} className="relative z-10">
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
+import { motion } from "framer-motion"
 
 type Filter = {
     nama_subjek?: string
@@ -46,6 +47,7 @@ export default function Component() {
     })
 
     const [filteredData, setFilteredData] = useState(data);
+    const [mobileOpen, setmobileOpen] = useState(false);
 
     useEffect(() => {
         const isFilterEmpty = Object.values(filterQuery).every(value => value === "");
@@ -101,25 +103,45 @@ export default function Component() {
         ];
 
         return (
-            <div className="flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto">
-                <div className="flex flex-wrap gap-4 justify-center">
-                    {dropdowns.map((dropdown) => (
-                        <select
-                            key={dropdown.key}
-                            className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            value={filterQuery[dropdown.key]}
-                            onChange={(e) => setFilter({ ...filterQuery, [dropdown.key]: e.target.value })}
-                        >
-                            <option value="">Select {dropdown.label}</option>
-                            {data && Array.from(new Set(data.map((subject) => subject[dropdown.key]))).map((value, index) => (
-                                <option key={index} value={value}>
-                                    {value}
-                                </option>
-                            ))}
-                        </select>
-                    ))}
+            <>
+                {/* A button to open filter */}
+                <div className="flex justify-center">
+                    <Button
+                        onClick={() => setmobileOpen(!mobileOpen)}
+                        className="w-48 mb-4"
+                    >
+                        {mobileOpen ? "Close" : "Filter"}
+                    </Button>
                 </div>
-            </div>
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: mobileOpen ? "auto" : 0 }}
+                    className={`flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${mobileOpen ? '' : 'hidden'}`}
+                >
+                    <div className="flex flex-wrap gap-4 justify-center">
+                        {dropdowns.map((dropdown) => (
+                            <select
+                                key={dropdown.key}
+                                className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                value={filterQuery[dropdown.key]}
+                                onChange={(e) =>
+                                    setFilter({ ...filterQuery, [dropdown.key]: e.target.value })
+                                }
+                            >
+                                <option value="">Select {dropdown.label}</option>
+                                {data &&
+                                    Array.from(
+                                        new Set(data.map((subject) => subject[dropdown.key]))
+                                    ).map((value, index) => (
+                                        <option key={index} value={value}>
+                                            {value}
+                                        </option>
+                                    ))}
+                            </select>
+                        ))}
+                    </div>
+                </motion.div>
+            </>
         )
     }
 }
