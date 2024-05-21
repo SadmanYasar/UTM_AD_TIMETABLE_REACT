@@ -1,5 +1,8 @@
 import { Subject } from "@/services/subjects";
 import { Meteors } from "./meteor";
+import { Dialog, DialogPanel, DialogTitle, Description } from "@headlessui/react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export function SubjectCard({
     kod_kursus,
@@ -11,6 +14,8 @@ export function SubjectCard({
     status,
     tahun_kursus
 }: Subject) {
+    let [isOpen, setIsOpen] = useState(false)
+
     return (
         <>
             <div className="w-full relative">
@@ -41,7 +46,7 @@ export function SubjectCard({
                         {kod_subjek}
                     </p>
 
-                    <button className="border px-4 py-1 rounded-lg  border-gray-500 text-gray-300">
+                    <button onClick={() => setIsOpen(true)} className="border px-4 py-1 rounded-lg  border-gray-500 text-gray-300">
                         Details
                     </button>
 
@@ -49,6 +54,36 @@ export function SubjectCard({
                     <Meteors number={20} />
                 </div>
             </div>
+            <AnimatePresence>
+                {isOpen && (
+                    <Dialog static open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 bg-black/30"
+                        />
+                        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+                            <DialogPanel
+                                as={motion.div}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="max-w-lg space-y-4 bg-white shadow-md p-12 rounded-md"
+                            >
+                                <DialogTitle className="text-lg font-bold">{nama_subjek}</DialogTitle>
+                                <Description>Section {seksyen}</Description>
+                                <Description>Semester {semester}</Description>
+                                <Description>Session {sesi}</Description>
+                                <Description>Status {status}</Description>
+                                <div className="flex gap-4">
+                                    <button onClick={() => setIsOpen(false)}>Close</button>
+                                </div>
+                            </DialogPanel>
+                        </div>
+                    </Dialog>
+                )}
+            </AnimatePresence >
         </>
     );
 }
