@@ -1,13 +1,8 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/L20Hj36TxkA
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/routine')({
+export const Route = createFileRoute('/timetable')({
     component: Component,
+    
 })
 
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"

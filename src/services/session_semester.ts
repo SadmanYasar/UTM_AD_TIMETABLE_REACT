@@ -21,7 +21,7 @@ export async function fetchSesiSemester(): Promise<SesiSemesterResponse> {
         console.log(data)
         return data
     } catch (error) {
-        console.error("AJAX error!")
+        console.error("Error getting SesiSemester!")
     }
     return []
 }

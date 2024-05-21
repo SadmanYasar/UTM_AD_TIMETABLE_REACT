@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { isAuthenticated } from '../lib/utils'
+import Header from '@/components/ui/header'
 
 const TanStackRouterDevtools =
     process.env.NODE_ENV === 'production'
@@ -31,20 +32,21 @@ export const Route = createRootRoute({
         } else {
             return (
                 <>
-                    <div className="p-2 flex gap-2 justify-center bg-opacity-50 backdrop-filter backdrop-blur-lg">
+                    {/* <div className="p-2 flex gap-2 justify-center bg-opacity-50 backdrop-filter backdrop-blur-lg border">
                         <Link to="/profile" className="[&.active]:font-bold">
                             Profile
                         </Link>{' '}
                         <Link to="/session_semester" className="[&.active]:font-bold">
                             Session/Semester
                         </Link>{' '}
-                        <Link to="/routine" className="[&.active]:font-bold">
-                            Routine
+                        <Link to="/timetable" className="[&.active]:font-bold">
+                            Timetable
                         </Link>{' '}
-                        <Link to="/analysis" className="[&.active]:font-bold">
-                            Course
+                        <Link to="/subjects" className="[&.active]:font-bold">
+                            Subjects
                         </Link>{' '}
-                    </div>
+                    </div> */}
+                    <Header />
                     <Outlet />
                     {/* 
                     <Suspense>
