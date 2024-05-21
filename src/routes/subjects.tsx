@@ -41,7 +41,6 @@ export default function Component() {
         queryFn: () => getSubjects(getUser()?.user_auth?.login_name),
     })
 
-    //create a filtering system based on the keys in the data object
     const [filterQuery, setFilter] = useState<Filter>({
         sesi: '2023/2024',
     })
@@ -50,7 +49,6 @@ export default function Component() {
 
     useEffect(() => {
         const isFilterEmpty = Object.values(filterQuery).every(value => value === "");
-        //remove keys from filters with empty values or 0 values
         const newfilterQuery = Object.entries(filterQuery).reduce((acc, [key, value]) => {
             if (value !== "" && value !== 0) {
                 acc[key] = value;
@@ -81,7 +79,6 @@ export default function Component() {
 
     return (
         <>
-            {/* A filter section with eight dropdowns each containing the values from the data. Use sets to remove duplicate values */}
             {Dropdowns()}
             <BentoGrid className="max-w-5xl mx-auto px-8">
                 {filteredData?.map((subject, index) => (
@@ -92,107 +89,35 @@ export default function Component() {
     )
 
     function Dropdowns() {
+        const dropdowns = [
+            { key: 'sesi', label: 'Session' },
+            { key: 'semester', label: 'Semester' },
+            { key: 'tahun_kursus', label: 'Course Year' },
+            { key: 'kod_kursus', label: 'Course Code' },
+            { key: 'kod_subjek', label: 'Subject Code' },
+            { key: 'nama_subjek', label: 'Subject Name' },
+            { key: 'status', label: 'Status' },
+            { key: 'seksyen', label: 'Section' },
+        ];
+
         return (
             <div className="flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto">
-                <div className="flex flex-wrap gap-4">
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.sesi}
-                        onChange={(e) => setFilter({ ...filterQuery, sesi: e.target.value })}
-                    >
-                        <option value="">Select Session</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.sesi))).map((sesi, index) => (
-                            <option key={index} value={sesi}>
-                                {sesi}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.semester}
-                        onChange={(e) => setFilter({ ...filterQuery, semester: +e.target.value })}
-                    >
-                        <option value="">Select Semester</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.semester))).map((semester, index) => (
-                            <option key={index} value={semester}>
-                                {semester}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.tahun_kursus}
-                        onChange={(e) => setFilter({ ...filterQuery, tahun_kursus: +e.target.value })}
-                    >
-                        <option value="">Select Course Year</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.tahun_kursus))).map((tahun_kursus, index) => (
-                            <option key={index} value={tahun_kursus}>
-                                {tahun_kursus}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.kod_kursus}
-                        onChange={(e) => setFilter({ ...filterQuery, kod_kursus: e.target.value })}
-                    >
-                        <option value="">Select Course Code</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.kod_kursus))).map((kod_kursus, index) => (
-                            <option key={index} value={kod_kursus}>
-                                {kod_kursus}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="flex flex-wrap gap-4">
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.kod_subjek}
-                        onChange={(e) => setFilter({ ...filterQuery, kod_subjek: e.target.value })}
-                    >
-                        <option value="">Select Subject Code</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.kod_subjek))).map((kod_subjek, index) => (
-                            <option key={index} value={kod_subjek}>
-                                {kod_subjek}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.nama_subjek}
-                        onChange={(e) => setFilter({ ...filterQuery, nama_subjek: e.target.value })}
-                    >
-                        <option value="">Select Subject Name</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.nama_subjek))).map((nama_subjek, index) => (
-                            <option key={index} value={nama_subjek}>
-                                {nama_subjek}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.status}
-                        onChange={(e) => setFilter({ ...filterQuery, status: e.target.value })}
-                    >
-                        <option value="">Select Status</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.status))).map((status, index) => (
-                            <option key={index} value={status}>
-                                {status}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={filterQuery.seksyen}
-                        onChange={(e) => setFilter({ ...filterQuery, seksyen: +e.target.value })}
-                    >
-                        <option value="">Select Section</option>
-                        {data && Array.from(new Set(data.map((subject) => subject.seksyen))).map((seksyen, index) => (
-                            <option key={index} value={seksyen}>
-                                {seksyen}
-                            </option>
-                        ))}
-                    </select>
+                <div className="flex flex-wrap gap-4 justify-center">
+                    {dropdowns.map((dropdown) => (
+                        <select
+                            key={dropdown.key}
+                            className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={filterQuery[dropdown.key]}
+                            onChange={(e) => setFilter({ ...filterQuery, [dropdown.key]: e.target.value })}
+                        >
+                            <option value="">Select {dropdown.label}</option>
+                            {data && Array.from(new Set(data.map((subject) => subject[dropdown.key]))).map((value, index) => (
+                                <option key={index} value={value}>
+                                    {value}
+                                </option>
+                            ))}
+                        </select>
+                    ))}
                 </div>
             </div>
         )
