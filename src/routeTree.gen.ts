@@ -11,8 +11,9 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TimetableImport } from './routes/timetable'
+import { Route as SubjectsImport } from './routes/subjects'
 import { Route as SessionsemesterImport } from './routes/session_semester'
-import { Route as RoutineImport } from './routes/routine'
 import { Route as ProfileImport } from './routes/profile'
 import { Route as LoginImport } from './routes/login'
 import { Route as AnalysisImport } from './routes/analysis'
@@ -20,13 +21,18 @@ import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const SessionsemesterRoute = SessionsemesterImport.update({
-  path: '/session_semester',
+const TimetableRoute = TimetableImport.update({
+  path: '/timetable',
   getParentRoute: () => rootRoute,
 } as any)
 
-const RoutineRoute = RoutineImport.update({
-  path: '/routine',
+const SubjectsRoute = SubjectsImport.update({
+  path: '/subjects',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SessionsemesterRoute = SessionsemesterImport.update({
+  path: '/session_semester',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -70,12 +76,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
-    '/routine': {
-      preLoaderRoute: typeof RoutineImport
-      parentRoute: typeof rootRoute
-    }
     '/session_semester': {
       preLoaderRoute: typeof SessionsemesterImport
+      parentRoute: typeof rootRoute
+    }
+    '/subjects': {
+      preLoaderRoute: typeof SubjectsImport
+      parentRoute: typeof rootRoute
+    }
+    '/timetable': {
+      preLoaderRoute: typeof TimetableImport
       parentRoute: typeof rootRoute
     }
   }
@@ -88,8 +98,9 @@ export const routeTree = rootRoute.addChildren([
   AnalysisRoute,
   LoginRoute,
   ProfileRoute,
-  RoutineRoute,
   SessionsemesterRoute,
+  SubjectsRoute,
+  TimetableRoute,
 ])
 
 /* prettier-ignore-end */

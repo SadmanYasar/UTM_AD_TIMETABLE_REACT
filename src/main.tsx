@@ -20,7 +20,6 @@ const router = createRouter({
     ),
     defaultErrorComponent: ({ error }: { error: any }) => <ErrorComponent error={error} />,
     context: {
-        auth: undefined!, // We'll inject this when we render
         queryClient,
     },
     defaultPreload: 'intent',

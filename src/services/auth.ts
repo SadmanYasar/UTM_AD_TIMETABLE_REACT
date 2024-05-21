@@ -20,7 +20,7 @@ export interface AppStorage {
  * @param {string} password - The password for authentication.
  * @returns {Promise<any>} - A promise that resolves with the login response data.
  */
-export async function login(username: string, password: string): Promise<any> {
+export async function login(username: string, password: string) {
     const myAuth = { 'entity': 'authentication', 'login': username, 'password': password }
 
     const authGetData = new URLSearchParams(myAuth).toString()
@@ -32,9 +32,9 @@ export async function login(username: string, password: string): Promise<any> {
         const appStorage: AppStorage = { user_auth: auth[0], data: null }
         sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
         console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
-        return data
+        return auth
     } catch (error) {
-        console.error("AJAX error!")
+        console.error("Login error!")
     }
 }
 
