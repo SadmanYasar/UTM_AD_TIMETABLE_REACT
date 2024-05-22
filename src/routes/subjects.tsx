@@ -2,15 +2,15 @@ import { BentoGrid } from "@/components/ui/bentoGrid"
 import { Button } from "@/components/ui/button"
 import LoadingSubjects from "@/components/ui/loading/subjects_loading"
 import { SubjectCard } from "@/components/ui/subjectCard"
-import { getUser, isAuthenticated } from "@/lib/utils"
-import { getSubjects } from "@/services/subjects"
+import { getUser, isAuthenticated, isFilterEmpty, newfilterQuery } from "@/lib/utils"
+import { SubjectResponse, getSubjects } from "@/services/subjects"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
-import { motion } from "framer-motion"
+import Dropdowns from "@/components/ui/Dropdowns"
 
-interface Filter {
+export interface Filter {
     sesi?: string;
     semester?: number;
     tahun_kursus?: number;
@@ -21,7 +21,7 @@ interface Filter {
     seksyen?: number;
 }
 
-type FilterKeys = keyof Filter;
+export type FilterKeys = keyof Filter;
 
 export const Route = createFileRoute('/subjects')({
     component: Component,
@@ -48,20 +48,10 @@ export default function Component() {
     })
 
     const [filteredData, setFilteredData] = useState(data);
-    const [mobileOpen, setmobileOpen] = useState(false);
 
     useEffect(() => {
-        const isFilterEmpty = Object.values(filterQuery).every((value) => value === "" || value === 0);
-
-        const newfilterQuery = Object.entries(filterQuery).reduce((acc, [key, value]) => {
-            if (value !== "" && value !== 0) {
-                acc[key as FilterKeys] = value;
-            }
-            return acc;
-        }, {} as Filter);
-
-        if (!isFilterEmpty) {
-            const filtered = data ? filter(data, newfilterQuery) : [];
+        if (!isFilterEmpty(filterQuery)) {
+            const filtered = data ? filter(data, newfilterQuery(filterQuery)) : [];
             setFilteredData(filtered);
         } else {
             setFilteredData(data);
@@ -83,7 +73,7 @@ export default function Component() {
 
     return (
         <>
-            {Dropdowns()}
+            <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
             <BentoGrid className="max-w-5xl mx-auto px-8">
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
@@ -91,63 +81,4 @@ export default function Component() {
             </BentoGrid>
         </>
     )
-
-    function Dropdowns() {
-        const dropdowns: {
-            key: FilterKeys;
-            label: string;
-        }[] = [
-                { key: 'sesi', label: 'Session' },
-                { key: 'semester', label: 'Semester' },
-                { key: 'tahun_kursus', label: 'Course Year' },
-                { key: 'kod_kursus', label: 'Course Code' },
-                { key: 'kod_subjek', label: 'Subject Code' },
-                { key: 'nama_subjek', label: 'Subject Name' },
-                { key: 'status', label: 'Status' },
-                { key: 'seksyen', label: 'Section' },
-            ];
-
-        return (
-            <>
-                {/* A button to open filter */}
-                <div className="flex justify-center">
-                    <Button
-                        onClick={() => setmobileOpen(!mobileOpen)}
-                        className="w-48 mb-4"
-                    >
-                        {mobileOpen ? "Close" : "Filter"}
-                    </Button>
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: mobileOpen ? "auto" : 0 }}
-                    className={`flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${mobileOpen ? '' : 'hidden'}`}
-                >
-                    <div className="flex flex-wrap gap-4 justify-center">
-                        {dropdowns.map((dropdown) => (
-                            <select
-                                key={dropdown.key}
-                                className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                value={filterQuery[dropdown.key]}
-                                onChange={(e) =>
-                                    setFilter({ ...filterQuery, [dropdown.key]: dropdown.key === 'seksyen' || dropdown.key === 'semester' || dropdown.key === 'tahun_kursus' ? parseInt(e.target.value) || 0 : e.target.value || "" })
-                                }
-                            >
-                                <option value="">Select {dropdown.label}</option>
-                                {data &&
-                                    Array.from(
-                                        new Set(data.map((subject) => subject[dropdown.key]))
-                                    ).map((value, index) => (
-                                        <option key={index} value={value}>
-                                            {value}
-                                        </option>
-                                    ))}
-                            </select>
-                        ))}
-                    </div>
-                </motion.div>
-            </>
-        )
-    }
 }
-

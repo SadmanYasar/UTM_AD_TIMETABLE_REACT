@@ -1,3 +1,4 @@
+import { Filter, FilterKeys } from "@/routes/subjects"
 import { AppStorage } from "@/services/auth"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -27,3 +28,26 @@ export function getUser() {
 
   return user
 }
+
+/**
+ * Checks if the given filter query is empty.
+ * @param filterQuery - The filter query object.
+ * @returns True if the filter query is empty, false otherwise.
+ */
+export const isFilterEmpty = (filterQuery: Filter) => {
+  return Object.values(filterQuery).every((value) => value === "" || value === 0);
+};
+
+/**
+ * Creates a new filter query object by removing empty or zero values from the input filter query object.
+ * @param filterQuery - The filter query object to be filtered.
+ * @returns A new filter query object with empty or zero values removed.
+ */
+export const newfilterQuery = (filterQuery: Filter) => {
+  return Object.entries(filterQuery).reduce((acc, [key, value]) => {
+    if (value !== "" && value !== 0) {
+      acc[key as FilterKeys] = value;
+    }
+    return acc;
+  }, {} as Filter);
+};
