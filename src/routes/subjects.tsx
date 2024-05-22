@@ -10,16 +10,18 @@ import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
 import { motion } from "framer-motion"
 
-type Filter = {
-    nama_subjek?: string
-    sesi?: string
-    kod_kursus?: string
-    status?: string
-    kod_subjek?: string
-    semester?: number
-    tahun_kursus?: number
-    seksyen?: number
+interface Filter {
+    sesi?: string;
+    semester?: number;
+    tahun_kursus?: number;
+    kod_kursus?: string;
+    kod_subjek?: string;
+    nama_subjek?: string;
+    status?: string;
+    seksyen?: number;
 }
+
+type FilterKeys = keyof Filter;
 
 export const Route = createFileRoute('/subjects')({
     component: Component,
@@ -43,20 +45,20 @@ export default function Component() {
     })
 
     const [filterQuery, setFilter] = useState<Filter>({
-        sesi: '2023/2024',
     })
 
     const [filteredData, setFilteredData] = useState(data);
     const [mobileOpen, setmobileOpen] = useState(false);
 
     useEffect(() => {
-        const isFilterEmpty = Object.values(filterQuery).every(value => value === "");
+        const isFilterEmpty = Object.values(filterQuery).every((value) => value === "" || value === 0);
+
         const newfilterQuery = Object.entries(filterQuery).reduce((acc, [key, value]) => {
             if (value !== "" && value !== 0) {
-                acc[key] = value;
+                acc[key as FilterKeys] = value;
             }
             return acc;
-        }, {});
+        }, {} as Filter);
 
         if (!isFilterEmpty) {
             const filtered = data ? filter(data, newfilterQuery) : [];
@@ -91,16 +93,19 @@ export default function Component() {
     )
 
     function Dropdowns() {
-        const dropdowns = [
-            { key: 'sesi', label: 'Session' },
-            { key: 'semester', label: 'Semester' },
-            { key: 'tahun_kursus', label: 'Course Year' },
-            { key: 'kod_kursus', label: 'Course Code' },
-            { key: 'kod_subjek', label: 'Subject Code' },
-            { key: 'nama_subjek', label: 'Subject Name' },
-            { key: 'status', label: 'Status' },
-            { key: 'seksyen', label: 'Section' },
-        ];
+        const dropdowns: {
+            key: FilterKeys;
+            label: string;
+        }[] = [
+                { key: 'sesi', label: 'Session' },
+                { key: 'semester', label: 'Semester' },
+                { key: 'tahun_kursus', label: 'Course Year' },
+                { key: 'kod_kursus', label: 'Course Code' },
+                { key: 'kod_subjek', label: 'Subject Code' },
+                { key: 'nama_subjek', label: 'Subject Name' },
+                { key: 'status', label: 'Status' },
+                { key: 'seksyen', label: 'Section' },
+            ];
 
         return (
             <>
@@ -125,7 +130,7 @@ export default function Component() {
                                 className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={filterQuery[dropdown.key]}
                                 onChange={(e) =>
-                                    setFilter({ ...filterQuery, [dropdown.key]: e.target.value })
+                                    setFilter({ ...filterQuery, [dropdown.key]: dropdown.key === 'seksyen' || dropdown.key === 'semester' || dropdown.key === 'tahun_kursus' ? parseInt(e.target.value) || 0 : e.target.value || "" })
                                 }
                             >
                                 <option value="">Select {dropdown.label}</option>
