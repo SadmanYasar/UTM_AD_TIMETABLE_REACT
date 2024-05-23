@@ -58,19 +58,19 @@ export default function Header() {
                     </button>
                 </div>
                 <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/profile"
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/profile" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
                     >
                         Profile
                     </Link>{' '}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester"
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
                     >
                         Session/Semester
                     </Link>{' '}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable"
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
                     >
                         Timetable
                     </Link>{' '}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/subjects"
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
                     >
                         Subjects
                     </Link>{' '}

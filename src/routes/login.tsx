@@ -34,7 +34,7 @@ export default function Component() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 p-4 flex flex-col items-center justify-center">
+        <div className="min-h-screen p-4 flex flex-col items-center justify-center">
             <div className="w-full max-w-md">
                 <div className="flex flex-col items-center mb-6">
                     <img
@@ -44,27 +44,27 @@ export default function Component() {
                     // width={96}
                     // height={96}
                     />
-                    <h1 className="text-2xl font-semibold text-gray-700 text-center">Faculty of Computing, Universiti Teknologi Malaysia</h1>
-                    <h2 className="text-xl font-semibold text-gray-700 mt-2">E-Learning FK</h2>
+                    <h1 className="text-2xl font-semibold text-gray-700 dark:text-white text-center">Faculty of Computing, Universiti Teknologi Malaysia</h1>
+                    <h2 className="text-xl font-semibold text-gray-700 dark:text-white mt-2">E-Learning FK</h2>
                 </div>
                 <div className="bg-white shadow-md rounded-lg overflow-hidden">
                     <div className="grid grid-cols-1 gap-4 p-4">
                         {/* <div className="border-r border-gray-200"> */}
-                        <h3 className="text-lg font-semibold text-center mb-4">STAFF/STUDENT</h3>
+                        <h3 className="text-lg font-semibold dark:text-black text-center mb-4">STAFF/STUDENT</h3>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="login">
                                     Login:
                                 </label>
-                                <Input id="login" placeholder="Your login" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                                <Input id="login" placeholder="Your login" className="dark:text-black" value={username} onChange={(e) => setUsername(e.target.value)} required />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="password">
                                     Password:
                                 </label>
-                                <Input id="password" placeholder="Your password" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
+                                <Input id="password" placeholder="Your password" className="dark:text-black" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
                             </div>
-                            <Button type="submit" className="w-full">Submit</Button>
+                            <Button type="submit" className="w-full dark:text-white dark:bg-navBg">Submit</Button>
                         </form>
                     </div>
                 </div>
