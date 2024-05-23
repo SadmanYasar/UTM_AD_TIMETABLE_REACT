@@ -3,8 +3,8 @@
  * @see https://v0.dev/t/Bbc1NzhKoqD
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/atoms/input"
+import { Button } from "@/components/ui/atoms/button"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
 import { login } from "@/services/auth"

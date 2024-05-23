@@ -1,4 +1,4 @@
-import { BentoGrid } from "@/components/ui/bentoGrid"
+import { BentoGrid } from "@/components/ui/atoms/bentoGrid"
 
 export default function LoadingSubjects() {
     return (

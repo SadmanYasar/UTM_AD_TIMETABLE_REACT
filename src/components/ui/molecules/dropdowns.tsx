@@ -1,8 +1,17 @@
 import { SubjectResponse } from "@/services/subjects";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Filter, FilterKeys } from "../../routes/subjects";
-import { Button } from "./button";
+import { Filter, FilterKeys } from "../../../routes/subjects";
+import { Button } from "../atoms/button";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/atoms/select";
 
 export type Dropdowns = {
     key: FilterKeys;

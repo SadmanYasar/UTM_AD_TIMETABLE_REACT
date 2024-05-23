@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react"
-import { Dialog, DialogPanel, Disclosure, DisclosureButton, Popover, PopoverButton, PopoverGroup } from "@headlessui/react"
+import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react"
 import {
     Bars3Icon,
-    XMarkIcon,
-    MagnifyingGlassIcon
-} from "@heroicons/react/24/outline"
+    XMarkIcon} from "@heroicons/react/24/outline"
 import { motion, useScroll } from 'framer-motion';
 import { Link } from "@tanstack/react-router";
 

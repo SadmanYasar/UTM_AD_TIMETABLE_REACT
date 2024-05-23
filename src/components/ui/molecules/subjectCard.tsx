@@ -1,5 +1,5 @@
 import { Subject } from "@/services/subjects";
-import { Meteors } from "./meteor";
+import { Meteors } from "../atoms/meteor";
 import { Dialog, DialogPanel, DialogTitle, Description } from "@headlessui/react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";

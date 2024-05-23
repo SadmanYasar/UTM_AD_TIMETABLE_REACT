@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
-import { Spinner } from './components/ui/spinner';
+import { Spinner } from './components/ui/atoms/spinner';
 
 // Create a new router instance
 const router = createRouter({

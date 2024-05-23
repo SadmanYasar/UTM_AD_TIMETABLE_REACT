@@ -1,10 +1,48 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/atoms/button"
 import SessionSemesterLoadingTable from "@/components/ui/loading/session_semester_loading"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { isAuthenticated } from "@/lib/utils"
-import { SesiSemester, SesiSemesterResponse, fetchSesiSemester } from "@/services/session_semester"
+import { SesiSemester, fetchSesiSemester } from "@/services/session_semester"
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import { createFileRoute, redirect } from "@tanstack/react-router"
+import { DataTable } from "../components/ui/molecules/dataTable"
+import { ArrowUpDown } from "lucide-react"
+import {
+    ColumnDef,
+} from "@tanstack/react-table";
+
+export const columns: ColumnDef<SesiSemester>[] = [
+    {
+        header: 'Semester',
+        accessorKey: 'semester',
+    },
+    {
+        accessorKey: 'sesi_semester_id',
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    ID
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
+    },
+    {
+        header: 'Start Date',
+        accessorKey: 'tarikh_mula',
+    },
+    {
+        header: 'End Date',
+        accessorKey: 'tarikh_tamat',
+    },
+
+    {
+        header: 'Session',
+        accessorKey: 'sesi',
+    },
+]
 
 export const Route = createFileRoute('/session_semester')({
     component: Component,
@@ -45,38 +83,14 @@ export default function Component() {
 
     return (
         <>
-            {/* Display the data in a table for desktop and as 1 column of rows on mobile. Use Shadcn */}
-            <>
+            <div className="container mx-auto py-10">
                 <div className="flex items-center gap-2">
-                    <div className="w-12 h-12" />
                     <div className="grid grid-rows-2 items-center gap-1">
                         <h1 className="text-2xl font-bold tracking-tighter">Session Semester</h1>
-                        <p className="text-sm font-medium tracking-wide text-gray-500 dark:text-gray-400">List of session semester</p>
                     </div>
                 </div>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead align="center">Semester</TableHead>
-                            <TableHead align="center">Semester ID</TableHead>
-                            <TableHead align="center">Tarikh Tamat</TableHead>
-                            <TableHead align="center">Tarikh Mula</TableHead>
-                            <TableHead align="center">Session</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {data?.map((item: SesiSemester, index) => (
-                            <TableRow key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
-                                <TableCell>{item.semester}</TableCell>
-                                <TableCell>{item.sesi_semester_id}</TableCell>
-                                <TableCell>{item.tarikh_tamat}</TableCell>
-                                <TableCell>{item.tarikh_mula}</TableCell>
-                                <TableCell>{item.sesi}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </>
+                <DataTable columns={columns} data={data ? data : []} />
+            </div>
         </> // Add a closing tag for the return statement
     )
 }

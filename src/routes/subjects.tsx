@@ -1,14 +1,14 @@
-import { BentoGrid } from "@/components/ui/bentoGrid"
-import { Button } from "@/components/ui/button"
+import { BentoGrid } from "@/components/ui/atoms/bentoGrid"
+import { Button } from "@/components/ui/atoms/button"
 import LoadingSubjects from "@/components/ui/loading/subjects_loading"
-import { SubjectCard } from "@/components/ui/subjectCard"
+import { SubjectCard } from "@/components/ui/molecules/subjectCard"
 import { getUser, isAuthenticated, isFilterEmpty, newfilterQuery } from "@/lib/utils"
-import { SubjectResponse, getSubjects } from "@/services/subjects"
+import { getSubjects } from "@/services/subjects"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
-import Dropdowns from "@/components/ui/Dropdowns"
+import Dropdowns from "@/components/ui/molecules/dropdowns"
 
 export interface Filter {
     sesi?: string;
@@ -74,7 +74,7 @@ export default function Component() {
     return (
         <>
             <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
-            <BentoGrid className="max-w-5xl mx-auto px-8">
+            <BentoGrid>
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
                 ))}

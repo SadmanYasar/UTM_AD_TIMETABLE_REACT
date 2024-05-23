@@ -5,7 +5,7 @@ export const Route = createFileRoute('/timetable')({
     
 })
 
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/table"
+import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/atoms/table"
 
 export default function Component() {
     return (

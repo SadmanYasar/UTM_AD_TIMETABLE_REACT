@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/atoms/button"
 import { isAuthenticated } from "@/lib/utils"
 import { AppStorage, User, logout } from "@/services/auth"
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"

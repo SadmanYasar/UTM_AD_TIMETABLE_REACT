@@ -2,7 +2,7 @@ import React, { Suspense } from 'react'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { isAuthenticated } from '../lib/utils'
-import Header from '@/components/ui/header'
+import Header from '@/components/ui/molecules/header'
 
 const TanStackRouterDevtools =
     process.env.NODE_ENV === 'production'

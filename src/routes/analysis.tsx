@@ -3,10 +3,10 @@
  * @see https://v0.dev/t/3rPzaCO5PqW
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
-import { TabsTrigger, TabsList, Tabs } from "@/components/ui/tabs"
-import { Label } from "@/components/ui/label"
-import { Select } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
+import { TabsTrigger, TabsList, Tabs } from "@/components/ui/atoms/tabs"
+import { Label } from "@/components/ui/atoms/label"
+import { Select } from "@/components/ui/atoms/select"
+import { Input } from "@/components/ui/atoms/input"
 import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute('/analysis')({
