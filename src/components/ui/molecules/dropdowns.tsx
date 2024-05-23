@@ -45,7 +45,7 @@ export default function Dropdowns({ filterQuery, setFilter, data }: DropdownsPro
                 animate={{ opacity: 1, height: filterOpen ? "auto" : 0 }}
                 className={`flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${filterOpen ? '' : 'hidden'}`}
             >
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-wrap gap-4 justify-center dark:text-black">
                     {dropdowns.map((dropdown) => (
                         <select
                             key={dropdown.key}

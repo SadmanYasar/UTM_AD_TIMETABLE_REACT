@@ -3,7 +3,7 @@ import { BentoGrid } from "@/components/ui/atoms/bentoGrid"
 export default function LoadingSubjects() {
     return (
         <>
-            <BentoGrid className="max-w-5xl mx-auto px-8">
+            <BentoGrid className="container mx-auto px-8">
                 {Array.from({ length: 10 }).map((_, index) => (
                     <LoadingCard key={index} />
                 ))}

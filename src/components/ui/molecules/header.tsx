@@ -5,6 +5,7 @@ import {
     XMarkIcon} from "@heroicons/react/24/outline"
 import { motion, useScroll } from 'framer-motion';
 import { Link } from "@tanstack/react-router";
+import { ModeToggle } from "../atoms/modeToggle";
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -73,6 +74,7 @@ export default function Header() {
                         Subjects
                     </Link>{' '}
                 </PopoverGroup>
+                <ModeToggle />
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
                 <div className="fixed inset-0 z-10" />

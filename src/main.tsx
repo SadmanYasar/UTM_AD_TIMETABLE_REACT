@@ -9,6 +9,7 @@ const queryClient = new QueryClient();
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 import { Spinner } from './components/ui/atoms/spinner';
+import { ThemeProvider } from './components/ui/molecules/themeProvider';
 
 // Create a new router instance
 const router = createRouter({
@@ -41,9 +42,11 @@ if (!rootElement.innerHTML) {
     const root = ReactDOM.createRoot(rootElement)
     root.render(
         <StrictMode>
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} defaultPreload="intent" />
-            </QueryClientProvider>
+            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={router} defaultPreload="intent" />
+                </QueryClientProvider>
+            </ThemeProvider>
         </StrictMode>,
     )
 }

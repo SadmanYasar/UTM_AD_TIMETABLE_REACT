@@ -40,7 +40,7 @@ export default function Component() {
                     <img
                         alt="University Logo"
                         className="mb-4 w-48 object-cover"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdExRbVfBQxzHmteLr1aZzLLmaKfv81HZJ4HMFEpH72Q&s"
+                        src="utm_logo.png"
                     // width={96}
                     // height={96}
                     />
