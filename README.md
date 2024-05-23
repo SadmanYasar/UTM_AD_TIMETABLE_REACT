@@ -14,6 +14,16 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+## Tools Used
+- React
+- Vite
+- Typescript
+- Shadcn
+- Framer Motion
+- Tanstack Query
+- Tanstack Router
+- Tanstack Table
+
 ## Learn More
 
 To learn React, check out the [React documentation](https://reactjs.org/).
