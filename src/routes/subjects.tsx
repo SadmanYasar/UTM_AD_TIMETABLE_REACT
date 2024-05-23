@@ -78,6 +78,11 @@ export default function Component() {
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
                 ))}
+                {filteredData?.length === 0 && (
+                    <div className="col-span-6 text-center dark:text-gray-300 font-bold">
+                        No subjects found
+                    </div>
+                )}
             </BentoGrid>
         </>
     )
