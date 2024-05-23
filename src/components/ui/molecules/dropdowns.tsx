@@ -43,13 +43,13 @@ export default function Dropdowns({ filterQuery, setFilter, data }: DropdownsPro
             <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: filterOpen ? "auto" : 0 }}
-                className={`flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${filterOpen ? '' : 'hidden'}`}
+                className={`px-8 md:px-0 flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${filterOpen ? '' : 'hidden'}`}
             >
-                <div className="flex flex-wrap gap-4 justify-center dark:text-black">
+                <div className="flex flex-wrap gap-4 justify-center dark:text-white">
                     {dropdowns.map((dropdown) => (
                         <select
                             key={dropdown.key}
-                            className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-white"
                             value={filterQuery[dropdown.key]}
                             onChange={(e) =>
                                 setFilter({ ...filterQuery, [dropdown.key]: dropdown.key === 'seksyen' || dropdown.key === 'semester' || dropdown.key === 'tahun_kursus' ? parseInt(e.target.value) || 0 : e.target.value || "" })

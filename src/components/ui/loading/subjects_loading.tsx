@@ -17,7 +17,7 @@ const LoadingCard = () => {
     return (
         <>
             <div className="w-full relative">
-                <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
+                <div className="absolute inset-0 h-full w-full border transform scale-[0.80]rounded-full blur-3xl" />
                 <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
                     <div role="status" className="max-w-sm animate-pulse">
                         <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>

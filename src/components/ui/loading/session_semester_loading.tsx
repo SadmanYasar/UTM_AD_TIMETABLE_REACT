@@ -20,7 +20,7 @@ export default function SessionSemesterLoadingTable() {
                 </TableHeader>
                 <TableBody>
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <TableRow key={index} className={index % 2 === 0 ? 'animate-pulse bg-gray-100' : ''} >
+                        <TableRow key={index} className={index % 2 === 0 ? 'animate-pulse bg-gray-800' : ''} >
                             <TableCell>
                                 <div className="h-4 rounded " />
                             </TableCell>

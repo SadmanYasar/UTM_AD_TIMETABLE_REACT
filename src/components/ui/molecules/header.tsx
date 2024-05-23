@@ -2,7 +2,8 @@ import { useState, useEffect } from "react"
 import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react"
 import {
     Bars3Icon,
-    XMarkIcon} from "@heroicons/react/24/outline"
+    XMarkIcon
+} from "@heroicons/react/24/outline"
 import { motion, useScroll } from 'framer-motion';
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "../atoms/modeToggle";
@@ -78,7 +79,7 @@ export default function Header() {
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
                 <div className="fixed inset-0 z-10" />
-                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-primary-black bg-black sm:max-w-sm sm:ring-1">
+                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-primary-black bg-navBg sm:max-w-sm sm:ring-1">
                     <div className="flex items-center justify-between">
                         <button
                             type="button"

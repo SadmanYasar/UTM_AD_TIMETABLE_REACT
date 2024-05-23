@@ -19,7 +19,7 @@ export function SubjectCard({
     return (
         <>
             <div className="w-full relative">
-                <div className="absolute inset-0 h-full w-full bg-gradient-to-r transform scale-[0.80] rounded-full blur-3xl" />
+                <div className="absolute inset-0 h-full w-full transform scale-[0.80] rounded-full blur-3xl" />
                 <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
                     <div className="h-5 w-5 rounded-full border flex items-center justify-center mb-4 border-gray-500">
                         <svg
@@ -69,7 +69,7 @@ export function SubjectCard({
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
-                                className="max-w-lg space-y-4 bg-white shadow-md p-12 rounded-md"
+                                className="max-w-lg space-y-4 bg-white shadow-md p-12 rounded-md dark:bg-gray-900 dark:text-white"
                             >
                                 <DialogTitle className="text-lg font-bold">{nama_subjek}</DialogTitle>
                                 <Description>Section {seksyen}</Description>
