@@ -21,7 +21,7 @@ export function SubjectCard({
             <div className="w-full relative">
                 <div className="absolute inset-0 h-full w-full transform scale-[0.80] rounded-full blur-3xl" />
                 <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
-                    <div className="h-5 w-5 rounded-full border flex items-center justify-center mb-4 border-gray-500">
+                    {/* <div className="h-5 w-5 rounded-full border flex items-center justify-center mb-4 border-gray-500">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -36,14 +36,22 @@ export function SubjectCard({
                                 d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25"
                             />
                         </svg>
-                    </div>
+                    </div> */}
 
                     <h1 className="font-bold text-xl text-white mb-4 relative z-10">
                         {nama_subjek}
                     </h1>
 
                     <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
-                        {kod_subjek}
+                        {kod_subjek} - {seksyen}
+                    </p>
+
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
+                        {kod_kursus} - {sesi}
+                    </p>
+
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
+                        Semester {semester}
                     </p>
 
                     <button onClick={() => setIsOpen(true)} className="border px-4 py-1 rounded-lg  border-gray-500 text-gray-300">
@@ -72,10 +80,12 @@ export function SubjectCard({
                                 className="max-w-lg space-y-4 bg-white shadow-md p-12 rounded-md dark:bg-gray-900 dark:text-white"
                             >
                                 <DialogTitle className="text-lg font-bold">{nama_subjek}</DialogTitle>
-                                <Description>Section {seksyen}</Description>
-                                <Description>Semester {semester}</Description>
-                                <Description>Session {sesi}</Description>
-                                <Description>Status {status}</Description>
+                                <Description>Course Code - {kod_kursus}</Description>
+                                <Description>Section - {seksyen}</Description>
+                                <Description>Semester - {semester}</Description>
+                                <Description>Session - {sesi}</Description>
+                                <Description>Course Year - {tahun_kursus}</Description>
+                                <Description>Status - {status}</Description>
                                 <div className="flex gap-4">
                                     <button onClick={() => setIsOpen(false)}>Close</button>
                                 </div>

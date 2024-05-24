@@ -3,8 +3,35 @@ import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@
 import { getUser, isAuthenticated } from "@/lib/utils"
 import { Subject, SubjectResponse, getSubjects } from "@/services/subjects"
 import { useQuery } from "@tanstack/react-query"
-import { getTimeTable } from "@/services/timetable"
+import { SubjectTable, SubjectTableResponse, getTimeTable } from "@/services/timetable"
 import filter from "@mcabreradev/filter"
+
+type Hours = {
+    [key: string]: { start: string, end: string }
+}
+const hours: Hours = {
+    1: { start: "8am", end: "9am" },
+    2: { start: "9am", end: "10am" },
+    3: { start: "10am", end: "11am" },
+    4: { start: "10am", end: "11am" },
+    5: { start: "11am", end: "12pm" },
+    6: { start: "12pm", end: "1pm" },
+    7: { start: "1pm", end: "2pm" },
+    8: { start: "2pm", end: "3pm" },
+    9: { start: "3pm", end: "4pm" },
+    10: { start: "4pm", end: "5pm" },
+}
+
+type Days = {
+    [key: string]: string
+}
+const days: Days = {
+    1: "Sunday",
+    2: "Monday",
+    3: "Tuesday",
+    4: "Wednesday",
+    5: "Thursday",
+}
 
 export const Route = createFileRoute('/timetable')({
     component: Component,
@@ -33,8 +60,8 @@ export default function Component() {
             //given the sesi is in format YYYY/YYYY, eg 2023/2024, find the latest sesi from subjects and also the latest semester of that sesi given that the semester is either 1 or 2
             let largestSemesterForTheLatestSesi = 0;
             const sesi = subjects?.reduce((acc: Subject | undefined, curr: Subject) => {
-                const [start, end] = curr.sesi.split('/')
-                const [accStart, accEnd] = acc?.sesi.split('/') ?? ['0', '0']
+                const [_, end] = curr.sesi.split('/')
+                const [__, accEnd] = acc?.sesi.split('/') ?? ['0', '0']
                 if (parseInt(end) > parseInt(accEnd)) {
                     return curr
                 }
@@ -60,6 +87,7 @@ export default function Component() {
             }))
 
             console.log(timetables)
+
             return timetables
         },
         enabled: !!subjects,
@@ -104,19 +132,19 @@ export default function Component() {
                         <TableRow>
                             <TableHead>Subject</TableHead>
                             <TableHead>Day</TableHead>
-                            <TableHead>Time</TableHead>
                             <TableHead>Venue</TableHead>
+                            <TableHead>Time</TableHead>
                         </TableRow>
                     </TableHeader>
                     {times?.map((timetable) => (
-
                         <TableBody>
                             {timetable?.map((timetable, index) => (
                                 <TableRow key={index}>
                                     <TableCell>{timetable.kod_subjek}</TableCell>
-                                    <TableCell>{timetable.hari}</TableCell>
-                                    <TableCell>{timetable.masa}</TableCell>
-                                    <TableCell>{timetable.ruang.nama_ruang}</TableCell>
+                                    <TableCell>{days[timetable.hari as keyof Days]}</TableCell>
+                                    <TableCell>{timetable.ruang.nama_ruang_singkatan}</TableCell>
+                                    {/* <TableCell>{hours[timetable.masa.toString()]}</TableCell> */}
+                                    <TableCell>{hours[timetable.masa.toString()]?.start} - {hours[timetable.masa.toString()]?.end}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
