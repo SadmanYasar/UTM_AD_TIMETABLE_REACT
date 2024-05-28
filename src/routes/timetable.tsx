@@ -1,37 +1,19 @@
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/atoms/table"
 import { getUser, isAuthenticated } from "@/lib/utils"
-import { Subject, SubjectResponse, getSubjects } from "@/services/subjects"
+import { Subject, getSubjects } from "@/services/subjects"
 import { useQuery } from "@tanstack/react-query"
-import { SubjectTable, SubjectTableResponse, getTimeTable } from "@/services/timetable"
+import { getTimeTable } from "@/services/timetable"
 import filter from "@mcabreradev/filter"
 
-type Hours = {
-    [key: string]: { start: string, end: string }
-}
-const hours: Hours = {
-    1: { start: "8am", end: "9am" },
-    2: { start: "9am", end: "10am" },
-    3: { start: "10am", end: "11am" },
-    4: { start: "10am", end: "11am" },
-    5: { start: "11am", end: "12pm" },
-    6: { start: "12pm", end: "1pm" },
-    7: { start: "1pm", end: "2pm" },
-    8: { start: "2pm", end: "3pm" },
-    9: { start: "3pm", end: "4pm" },
-    10: { start: "4pm", end: "5pm" },
-}
+const hours = [
+    "07:00 AM - 07:50 AM", "08:00 AM - 08:50 AM", "09:00 AM - 09:50 AM", "10:00 AM - 10:50 AM",
+    "11:00 AM - 11:50 AM", "12:00 PM - 12:50 PM", "01:00 PM - 01:50 PM", "02:00 PM - 02:50 PM",
+    "03:00 PM - 03:50 PM", "04:00 PM - 04:50 PM", "05:00 PM - 05:50 PM", "06:00 PM - 06:50 PM",
+    "07:00 PM - 07:50 PM", "08:00 PM - 08:50 PM", "09:00 PM - 09:50 PM", "10:00 PM - 10:50 PM"
+];
 
-type Days = {
-    [key: string]: string
-}
-const days: Days = {
-    1: "Sunday",
-    2: "Monday",
-    3: "Tuesday",
-    4: "Wednesday",
-    5: "Thursday",
-}
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export const Route = createFileRoute('/timetable')({
     component: Component,
@@ -40,7 +22,6 @@ export const Route = createFileRoute('/timetable')({
             throw redirect({
                 to: '/login',
                 search: {
-                    // Use the current location to power a redirect after login
                     redirect: location.href,
                 },
             })
@@ -57,7 +38,6 @@ export default function Component() {
     const { data: times, error, isLoading } = useQuery({
         queryKey: ['timetable'],
         queryFn: async () => {
-            //given the sesi is in format YYYY/YYYY, eg 2023/2024, find the latest sesi from subjects and also the latest semester of that sesi given that the semester is either 1 or 2
             let largestSemesterForTheLatestSesi = 0;
             const sesi = subjects?.reduce((acc: Subject | undefined, curr: Subject) => {
                 const [_, end] = curr.sesi.split('/')
@@ -78,33 +58,36 @@ export default function Component() {
                 }, 0)
             }
 
-            //filter the subjects by the latest sesi and semester
             const courses = subjects ? filter(subjects, { sesi, semester: largestSemesterForTheLatestSesi }) : []
 
-            //for each course, find the timetable and append it to array
             const timetables = await Promise.all(courses.map(async (course) => {
                 return await getTimeTable(course.sesi, course.semester.toString(), course.kod_subjek, course.seksyen.toString())
             }))
 
-            console.log(timetables)
-
             return timetables
         },
         enabled: !!subjects,
-
     })
 
     if (isLoading) {
-        return (
-            <div>Loading...</div>
-        )
+        return <div>Loading...</div>
     }
 
     if (error) {
-        return (
-            <div>An error occurred</div>
-        )
+        return <div>An error occurred</div>
     }
+
+    const timetableMatrix = Array.from({ length: 16 }, () => Array(7).fill(null));
+
+    times?.forEach((timetable) => {
+        timetable?.forEach((entry) => {
+            const dayIndex = entry.hari;
+            const timeIndex = entry.masa - 1;
+            if (dayIndex >= 0 && dayIndex < 7 && timeIndex >= 0 && timeIndex < 16) {
+                timetableMatrix[timeIndex][dayIndex] = `${entry.kod_subjek} - ${entry.seksyen}\n${entry.ruang.nama_ruang_singkatan}`;
+            }
+        });
+    });
 
     return (
         <div className="container mx-auto py-10">
@@ -113,49 +96,28 @@ export default function Component() {
                     <h1 className="text-2xl font-bold tracking-tighter">Timetable</h1>
                 </div>
             </div>
-            {/* 
-            For each array inside the array times, display a timetable with the days and the cell. 
-            Need to interprate them as follows:
-            "hari":2 => Monday
-            "masa":4 => 10am - 11am
-            venue => MPK3
-
-            "hari":2 => Monday
-            "masa":5 => 11am - 12pm
-            venue => MPK3
-
-            Final display: SCSJ4383 (Monday, MPK3, 10am-12pm) 
-            */}
-            <div className="rounded-md border">
+            <div className="rounded-md border overflow-auto">
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Subject</TableHead>
-                            <TableHead>Day</TableHead>
-                            <TableHead>Venue</TableHead>
                             <TableHead>Time</TableHead>
+                            {days.map((day, index) => (
+                                <TableHead key={index}>{day}</TableHead>
+                            ))}
                         </TableRow>
                     </TableHeader>
-                    {times?.map((timetable) => (
-                        <TableBody>
-                            {timetable?.map((timetable, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{timetable.kod_subjek}</TableCell>
-                                    <TableCell>{days[timetable.hari as keyof Days]}</TableCell>
-                                    <TableCell>{timetable.ruang.nama_ruang_singkatan}</TableCell>
-                                    {/* <TableCell>{hours[timetable.masa.toString()]}</TableCell> */}
-                                    <TableCell>{hours[timetable.masa.toString()]?.start} - {hours[timetable.masa.toString()]?.end}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    ))}
+                    <TableBody>
+                        {timetableMatrix.map((row, rowIndex) => (
+                            <TableRow key={rowIndex}>
+                                <TableCell>{hours[rowIndex]}</TableCell>
+                                {row.map((cell, cellIndex) => (
+                                    <TableCell key={cellIndex} className="whitespace-pre-wrap">{cell}</TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
             </div>
         </div>
     )
 }
-
-
-
-
-
