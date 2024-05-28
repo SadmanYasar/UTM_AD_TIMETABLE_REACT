@@ -77,26 +77,26 @@ export default function Component() {
         return <div>An error occurred</div>
     }
 
-    const timetableMatrix = Array.from({ length: 16 }, () => Array(7).fill(null));
+    const timetableMatrix = Array.from({ length: 16 }, () => Array(7).fill(''));
 
     times?.forEach((timetable) => {
         timetable?.forEach((entry) => {
-            const dayIndex = entry.hari;
+            const dayIndex = entry.hari - 1;
             const timeIndex = entry.masa - 1;
             if (dayIndex >= 0 && dayIndex < 7 && timeIndex >= 0 && timeIndex < 16) {
-                timetableMatrix[timeIndex][dayIndex] = `${entry.kod_subjek} - ${entry.seksyen}\n${entry.ruang.nama_ruang_singkatan}`;
+                timetableMatrix[timeIndex][dayIndex] = `${entry.kod_subjek} - ${entry.seksyen}\n${entry.ruang.nama_ruang_singkatan ? entry.ruang.nama_ruang_singkatan : '???'}`;
             }
         });
     });
 
     return (
-        <div className="container mx-auto py-10">
+        <div className="container py-10 mx-auto">
             <div className="flex items-center gap-2">
-                <div className="grid grid-rows-2 items-center gap-1">
+                <div className="grid items-center grid-rows-2 gap-1">
                     <h1 className="text-2xl font-bold tracking-tighter">Timetable</h1>
                 </div>
             </div>
-            <div className="rounded-md border overflow-auto">
+            <div className="overflow-auto border rounded-md">
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -111,7 +111,7 @@ export default function Component() {
                             <TableRow key={rowIndex}>
                                 <TableCell>{hours[rowIndex]}</TableCell>
                                 {row.map((cell, cellIndex) => (
-                                    <TableCell key={cellIndex} className="whitespace-pre-wrap">{cell}</TableCell>
+                                    <TableCell key={cellIndex} className="whitespace-pre-wrap">{cell ? cell : ''}</TableCell>
                                 ))}
                             </TableRow>
                         ))}
