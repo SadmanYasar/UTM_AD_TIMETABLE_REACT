@@ -74,7 +74,7 @@ export default function Component() {
     return (
         <>
             {/* Mobile Header */}
-            <h1 className="text-2xl font-bold my-4 block md:hidden">Subjects</h1>
+            <h1 className="text-2xl font-bold my-4 block md:hidden text-center">Subjects</h1>
 
             <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
             <BentoGrid>
