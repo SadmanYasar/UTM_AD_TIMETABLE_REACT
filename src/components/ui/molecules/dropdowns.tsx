@@ -1,4 +1,4 @@
-import { SubjectResponse } from "@/services/subjects";
+import { StudentSubjectResponse } from "@/services/pelajar_subjek";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Filter, FilterKeys } from "../../../routes/subjects";
@@ -13,7 +13,7 @@ export type Dropdowns = {
 type DropdownsProps = {
     filterQuery: Filter;
     setFilter: (filter: Filter) => void;
-    data: SubjectResponse | undefined;
+    data: StudentSubjectResponse | undefined;
 };
 
 const dropdowns: Dropdowns = [

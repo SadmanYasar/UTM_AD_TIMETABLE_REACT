@@ -1,14 +1,11 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Bbc1NzhKoqD
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { Input } from "@/components/ui/atoms/input"
 import { Button } from "@/components/ui/atoms/button"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useState } from "react"
-import { login } from "@/services/auth"
+import { adminLogin, login } from "@/services/auth"
 import { Router } from "@tanstack/react-router"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/atoms/radio-group"
+import { Label } from "@/components/ui/atoms/label"
 
 export const Route = createFileRoute('/login')({
     component: Component,
@@ -17,13 +14,18 @@ export const Route = createFileRoute('/login')({
 export default function Component() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [role, setRole] = useState('Student')
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         try {
-            await login(username, password)
+            if (role === 'Student') {
+                await login(username, password)
+            } else if (role === 'Admin') {
+                await adminLogin(username, password)
+            }
             //navigate to "/profile" route
             navigate({
                 to: '/profile'
@@ -34,23 +36,23 @@ export default function Component() {
     }
 
     return (
-        <div className="min-h-screen p-4 flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4">
             <div className="w-full max-w-md">
                 <div className="flex flex-col items-center mb-6">
                     <img
                         alt="University Logo"
-                        className="mb-4 w-48 object-cover"
+                        className="object-cover w-48 mb-4"
                         src="utm_logo.png"
                     // width={96}
                     // height={96}
                     />
-                    <h1 className="text-2xl font-semibold text-gray-700 dark:text-white text-center">Faculty of Computing, Universiti Teknologi Malaysia</h1>
-                    <h2 className="text-xl font-semibold text-gray-700 dark:text-white mt-2">E-Learning FK</h2>
+                    <h1 className="text-2xl font-semibold text-center text-gray-700 dark:text-white">Faculty of Computing, Universiti Teknologi Malaysia</h1>
+                    <h2 className="mt-2 text-xl font-semibold text-gray-700 dark:text-white">E-Learning FK</h2>
                 </div>
-                <div className="bg-white shadow-md rounded-lg overflow-hidden">
+                <div className="overflow-hidden bg-white rounded-lg shadow-md">
                     <div className="grid grid-cols-1 gap-4 p-4">
                         {/* <div className="border-r border-gray-200"> */}
-                        <h3 className="text-lg font-semibold dark:text-black text-center mb-4">STAFF/STUDENT</h3>
+                        <h3 className="mb-4 text-lg font-semibold text-center dark:text-black">STAFF/STUDENT</h3>
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700" htmlFor="login">
@@ -64,17 +66,28 @@ export default function Component() {
                                 </label>
                                 <Input id="password" placeholder="Your password" className="dark:text-black" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
                             </div>
+                            {/* Two radio buttons to choose if Student or Admin, required fields */}
+                            <RadioGroup className="flex flex-row text-black" defaultValue={role} value={role} onValueChange={(value) => setRole(value)}>
+                                <div className="space-x-2">
+                                    <RadioGroupItem value="Student" id="r1" className="text-gray-700 dark:text-black" />
+                                    <Label htmlFor="r1">Student</Label>
+                                </div>
+                                <div className="space-x-2">
+                                    <RadioGroupItem value="Admin" id="r2" className="text-gray-700 dark:text-black" />
+                                    <Label htmlFor="r2">Admin</Label>
+                                </div>
+                            </RadioGroup>
                             <Button type="submit" className="w-full dark:text-white dark:bg-navBg">Submit</Button>
                         </form>
                     </div>
                 </div>
-                <p className="text-xs text-center text-gray-600 mt-6">
+                <p className="mt-6 text-xs text-center text-gray-600">
                     If you have any comments or questions about this web page, please contact the webmaster at:
                     <a className="text-blue-600 hover:underline" href="#">
                         tims@fc.utm.my
                     </a>
                 </p>
-                <p className="text-xs text-center text-gray-600 mt-2">
+                <p className="mt-2 text-xs text-center text-gray-600">
                     Copyright © 2002-2024, Faculty of Computer Science, UTM
                 </p>
             </div>

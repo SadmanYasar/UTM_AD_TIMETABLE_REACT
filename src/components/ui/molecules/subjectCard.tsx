@@ -1,4 +1,4 @@
-import { Subject } from "@/services/subjects";
+import { StudentSubject } from "@/services/pelajar_subjek";
 import { Meteors } from "../atoms/meteor";
 import { Dialog, DialogPanel, DialogTitle, Description } from "@headlessui/react";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export function SubjectCard({
     sesi,
     status,
     tahun_kursus
-}: Subject) {
+}: StudentSubject) {
     let [isOpen, setIsOpen] = useState(false)
 
     return (

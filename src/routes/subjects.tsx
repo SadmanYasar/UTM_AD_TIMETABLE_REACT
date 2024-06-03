@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/atoms/button"
 import LoadingSubjects from "@/components/ui/loading/subjects_loading"
 import { SubjectCard } from "@/components/ui/molecules/subjectCard"
 import { getUser, isAuthenticated, isFilterEmpty, newfilterQuery } from "@/lib/utils"
-import { getSubjects } from "@/services/subjects"
+import { getSubjectsByStudentMatric } from "@/services/pelajar_subjek"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
@@ -41,7 +41,7 @@ export const Route = createFileRoute('/subjects')({
 export default function Component() {
     const { data, error, isLoading, refetch } = useQuery({
         queryKey: ['subjects'],
-        queryFn: () => getSubjects(getUser()?.user_auth?.login_name),
+        queryFn: () => getSubjectsByStudentMatric(getUser()?.user_auth?.login_name),
     })
 
     const [filterQuery, setFilter] = useState<Filter>({

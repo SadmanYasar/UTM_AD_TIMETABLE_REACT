@@ -1,3 +1,5 @@
+import { redirect } from "@tanstack/react-router"
+
 const baseURL = "http://web.fc.utm.my/ttms/web_man_webservice_json.cgi"
 
 export interface User {
@@ -5,6 +7,7 @@ export interface User {
     description: string
     full_name: string
     session_id: string
+    role: 'Admin' | 'Student' | 'Lecturer'
 }
 
 export type UserResponse = User[];
@@ -12,6 +15,40 @@ export type UserResponse = User[];
 export interface AppStorage {
     user_auth: User
     data: null
+}
+
+/**
+ * Performs an admin login using the provided session ID.
+ * @param {string} username - The username for authentication.
+ * @param {string} password - The password for authentication.
+ * @returns A Promise that resolves to the user authentication data.
+ */
+export async function adminLogin(username: string, password: string) {
+    const adminAuthURLbase = "http://web.fc.utm.my/ttms/auth-admin.php"
+
+    try {
+        //login first
+        const user = await login(username, password)
+
+        if(!user) return;
+
+        const adminAuthParams = { 'session_id': user[0].session_id }
+        const adminAuthGetData = new URLSearchParams(adminAuthParams).toString()
+
+        const response = await fetch(adminAuthURLbase + '?' + adminAuthGetData)
+        const data = await response.json()
+        console.log(data)
+        const auth = data as UserResponse
+        const appStorage: AppStorage = { user_auth: { ...auth[0], role: "Admin" }, data: null }
+        sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
+        console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
+        return auth
+    } catch (error) {
+        redirect({
+            to: "/login",
+        })
+        console.error("Admin login error!")
+    }
 }
 
 /**
@@ -29,11 +66,14 @@ export async function login(username: string, password: string) {
         const data = await response.json()
         console.log(data)
         const auth = data as UserResponse
-        const appStorage: AppStorage = { user_auth: auth[0], data: null }
+        const appStorage: AppStorage = { user_auth: { ...auth[0], role: "Student" }, data: null }
         sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
         console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
         return auth
     } catch (error) {
+        redirect({
+            to: "/login",
+        })
         console.error("Login error!")
     }
 }

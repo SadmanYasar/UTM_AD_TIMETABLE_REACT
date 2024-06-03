@@ -1,8 +1,8 @@
 const baseURL = "http://web.fc.utm.my/ttms/web_man_webservice_json.cgi"
 
-export type SubjectResponse = Subject[]
+export type StudentSubjectResponse = StudentSubject[]
 
-export interface Subject {
+export interface StudentSubject {
     nama_subjek: string
     sesi: string
     kod_kursus: string
@@ -13,7 +13,13 @@ export interface Subject {
     seksyen: number
 }
 
-export async function getSubjects(no_matrik?: string) {
+/**
+ * Retrieves the subjects for a student based on their matric number.
+ * @param no_matrik - The matric number of the student.
+ * @returns A promise that resolves to the subjects of the student.
+ * @throws An error if no_matrik is not provided.
+ */
+export async function getSubjectsByStudentMatric(no_matrik?: string) {
     try {
         if (!no_matrik) {
             throw new Error("No matric number")
@@ -24,7 +30,7 @@ export async function getSubjects(no_matrik?: string) {
         const response = await fetch(baseURL + '?' + subjectGetData)
         const data = await response.json()
         console.log(data)
-        const subjects = data as SubjectResponse
+        const subjects = data as StudentSubjectResponse
         return subjects
     } catch (error) {
         console.error("An error occured.")

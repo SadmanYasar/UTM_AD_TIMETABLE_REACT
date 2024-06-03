@@ -32,11 +32,11 @@ export default function Component() {
     }, [])
 
     return (
-        <div className="flex flex-col min-h-screen mx-auto max-w-2xl gap-4 p-4">
-            <div className="border-t flex items-center justify-center p-6 lg:border-t-0">
+        <div className="flex flex-col max-w-2xl min-h-screen gap-4 p-4 mx-auto">
+            <div className="flex items-center justify-center p-6 border-t lg:border-t-0">
                 <img
                     alt="University Logo"
-                    className="w-48 object-cover"
+                    className="object-cover w-48"
                     src="utm_logo.png"
                 />
             </div>
@@ -56,6 +56,10 @@ export default function Component() {
                     <div className="grid gap-0.5">
                         <div className="text-sm font-medium text-gray-500">Description</div>
                         <div className="font-medium">{data?.user_auth.description}</div>
+                    </div>
+                    <div className="grid gap-0.5">
+                        <div className="text-sm font-medium text-gray-500">Role</div>
+                        <div className="font-medium">{data?.user_auth.role}</div>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/atoms/table"
 import { getUser, isAuthenticated } from "@/lib/utils"
-import { Subject, getSubjects } from "@/services/subjects"
+import { StudentSubject, getSubjectsByStudentMatric } from "@/services/pelajar_subjek"
 import { useQuery } from "@tanstack/react-query"
 import { getTimeTable } from "@/services/timetable"
 import filter from "@mcabreradev/filter"
@@ -32,14 +32,14 @@ export const Route = createFileRoute('/timetable')({
 export default function Component() {
     const { data: subjects } = useQuery({
         queryKey: ['subjects'],
-        queryFn: () => getSubjects(getUser()?.user_auth?.login_name),
+        queryFn: () => getSubjectsByStudentMatric(getUser()?.user_auth?.login_name),
     })
 
     const { data: times, error, isLoading } = useQuery({
         queryKey: ['timetable'],
         queryFn: async () => {
             let largestSemesterForTheLatestSesi = 0;
-            const sesi = subjects?.reduce((acc: Subject | undefined, curr: Subject) => {
+            const sesi = subjects?.reduce((acc: StudentSubject | undefined, curr: StudentSubject) => {
                 const [_, end] = curr.sesi.split('/')
                 const [__, accEnd] = acc?.sesi.split('/') ?? ['0', '0']
                 if (parseInt(end) > parseInt(accEnd)) {
@@ -49,7 +49,7 @@ export default function Component() {
             }, undefined)?.sesi
 
             if (sesi) {
-                largestSemesterForTheLatestSesi = subjects?.reduce((acc: number, curr: Subject) => {
+                largestSemesterForTheLatestSesi = subjects?.reduce((acc: number, curr: StudentSubject) => {
                     const [start, end] = curr.sesi.split('/')
                     if (curr.sesi === sesi && curr.semester > acc) {
                         return curr.semester

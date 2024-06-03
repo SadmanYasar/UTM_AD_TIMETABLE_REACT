@@ -61,30 +61,51 @@ const IndexRoute = IndexImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/analysis': {
+      id: '/analysis'
+      path: '/analysis'
+      fullPath: '/analysis'
       preLoaderRoute: typeof AnalysisImport
       parentRoute: typeof rootRoute
     }
     '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
     '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
       preLoaderRoute: typeof ProfileImport
       parentRoute: typeof rootRoute
     }
     '/session_semester': {
+      id: '/session_semester'
+      path: '/session_semester'
+      fullPath: '/session_semester'
       preLoaderRoute: typeof SessionsemesterImport
       parentRoute: typeof rootRoute
     }
     '/subjects': {
+      id: '/subjects'
+      path: '/subjects'
+      fullPath: '/subjects'
       preLoaderRoute: typeof SubjectsImport
       parentRoute: typeof rootRoute
     }
     '/timetable': {
+      id: '/timetable'
+      path: '/timetable'
+      fullPath: '/timetable'
       preLoaderRoute: typeof TimetableImport
       parentRoute: typeof rootRoute
     }
@@ -93,7 +114,7 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
+export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AnalysisRoute,
   LoginRoute,
@@ -101,6 +122,46 @@ export const routeTree = rootRoute.addChildren([
   SessionsemesterRoute,
   SubjectsRoute,
   TimetableRoute,
-])
+})
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/analysis",
+        "/login",
+        "/profile",
+        "/session_semester",
+        "/subjects",
+        "/timetable"
+      ]
+    },
+    "/": {
+      "filePath": "index.tsx"
+    },
+    "/analysis": {
+      "filePath": "analysis.tsx"
+    },
+    "/login": {
+      "filePath": "login.tsx"
+    },
+    "/profile": {
+      "filePath": "profile.tsx"
+    },
+    "/session_semester": {
+      "filePath": "session_semester.tsx"
+    },
+    "/subjects": {
+      "filePath": "subjects.tsx"
+    },
+    "/timetable": {
+      "filePath": "timetable.tsx"
+    }
+  }
+}
+ROUTE_MANIFEST_END */

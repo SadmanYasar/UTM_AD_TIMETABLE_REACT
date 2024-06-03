@@ -6,14 +6,6 @@
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 ## Tools Used
 - React
 - Vite
@@ -25,21 +17,21 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Tanstack Table
 
 ## Services
-| Entity                  | Parameters                                | Status |
-|-------------------------|-------------------------------------------|--------|
-| sesisemester            |                                           | Done   |
-| pensyarah               | session_id, sesi, semester                |        |
-| subjek                  | sesi, semester                            |        |
-| pelajar                 | session_id, sesi, semester, limit, offset |        |
-| pensyarah_subjek        | no_pekerja                                |        |
-| pelajar_subjek          | no_matrik                                 | Done   |
-| subjek_seksyen          | sesi, semester                            |        |
-| subjek_pelajar          | session_id, sesi, semester, kod_subjek, seksyen |        |
-| subjek_pensyarah        | kod_subjek, [sesi], [semester], [seksyen] |        |
-| kurikulum               | [cohort]                                  |        |
-| kurikulum_subjek        | id_kurikulum                              |        |
-| kurikulum_subjek_elektif | id_kurikulum_subjek                       |        |
-| ruang                   | kod_fakulti, kod_ruang_like               |        |
-| jadual_ruang            | sesi, semester, kod_ruang                 |        |
-| jadual_subjek           | sesi, semester, kod_subjek, seksyen       | Done   |
-| auth                    | username,                                 | Done   |
+| No. | Entity                   | Parameters                                      | Status |
+| --- | ------------------------ | ----------------------------------------------- | ------ |
+| 1   | sesisemester             |                                                 | Done   |
+| 2   | pensyarah                | session_id, sesi, semester                      | Done   |
+| 3   | subjek                   | sesi, semester                                  | Done   |
+| 4   | pelajar                  | session_id, sesi, semester, limit, offset       | Done   |
+| 5   | pensyarah_subjek         | no_pekerja                                      | Done   |
+| 6   | pelajar_subjek           | no_matrik                                       | Done   |
+| 7   | subjek_seksyen           | sesi, semester                                  | Done   |
+| 8   | subjek_pelajar           | session_id, sesi, semester, kod_subjek, seksyen | Done   |
+| 9   | subjek_pensyarah         | kod_subjek, sesi, semester, seksyen             | Done   |
+| 10  | kurikulum                | cohort=yyyy/yyyy or none                        | Done   |
+| 11  | kurikulum_subjek         | id_kurikulum                                    | Done   |
+| 12  | kurikulum_subjek_elektif | id_kurikulum_subjek                             | Done   |
+| 13  | ruang                    | kod_fakulti, kod_ruang_like                     | Done   |
+| 14  | jadual_ruang             | sesi, semester, kod_ruang                       | Done   |
+| 15  | jadual_subjek            | sesi, semester, kod_subjek, seksyen             | Done   |
+| 16  | auth                     | username, password                              | Done   |
