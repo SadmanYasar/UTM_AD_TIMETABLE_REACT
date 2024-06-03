@@ -24,14 +24,22 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Tanstack Router
 - Tanstack Table
 
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Deployment
-
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
-
-### Troubleshooting
-
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+## Services
+| Entity                  | Parameters                                | Status |
+|-------------------------|-------------------------------------------|--------|
+| sesisemester            |                                           | Done   |
+| pensyarah               | session_id, sesi, semester                |        |
+| subjek                  | sesi, semester                            |        |
+| pelajar                 | session_id, sesi, semester, limit, offset |        |
+| pensyarah_subjek        | no_pekerja                                |        |
+| pelajar_subjek          | no_matrik                                 | Done   |
+| subjek_seksyen          | sesi, semester                            |        |
+| subjek_pelajar          | session_id, sesi, semester, kod_subjek, seksyen |        |
+| subjek_pensyarah        | kod_subjek, [sesi], [semester], [seksyen] |        |
+| kurikulum               | [cohort]                                  |        |
+| kurikulum_subjek        | id_kurikulum                              |        |
+| kurikulum_subjek_elektif | id_kurikulum_subjek                       |        |
+| ruang                   | kod_fakulti, kod_ruang_like               |        |
+| jadual_ruang            | sesi, semester, kod_ruang                 |        |
+| jadual_subjek           | sesi, semester, kod_subjek, seksyen       | Done   |
+| auth                    | username,                                 | Done   |
