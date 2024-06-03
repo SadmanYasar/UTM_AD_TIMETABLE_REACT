@@ -38,19 +38,19 @@ export function SubjectCard({
                         </svg>
                     </div> */}
 
-                    <h1 className="font-bold text-xl text-white mb-4 relative z-10">
+                    <h1 className="font-bold text-xl text-white mb-4 relative z-1">
                         {nama_subjek}
                     </h1>
 
-                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-1">
                         {kod_subjek} - {seksyen}
                     </p>
 
-                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-1">
                         {kod_kursus} - {sesi}
                     </p>
 
-                    <p className="font-normal text-base text-slate-500 mb-4 relative z-10">
+                    <p className="font-normal text-base text-slate-500 mb-4 relative z-1">
                         Semester {semester}
                     </p>
 

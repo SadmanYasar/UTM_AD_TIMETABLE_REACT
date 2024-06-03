@@ -13,7 +13,7 @@ const hours = [
     "07:00 PM - 07:50 PM", "08:00 PM - 08:50 PM", "09:00 PM - 09:50 PM", "10:00 PM - 10:50 PM"
 ];
 
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
 
 export const Route = createFileRoute('/timetable')({
     component: Component,

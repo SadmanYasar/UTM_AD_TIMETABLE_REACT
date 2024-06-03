@@ -9,6 +9,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
 import Dropdowns from "@/components/ui/molecules/dropdowns"
+import ComboBox from "@/components/ui/molecules/dropDownCombo"
 
 export interface Filter {
     sesi?: string;
@@ -73,6 +74,7 @@ export default function Component() {
 
     return (
         <>
+            <ComboBox />
             <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
             <BentoGrid>
                 {filteredData?.map((subject, index) => (
