@@ -7,7 +7,9 @@ export interface User {
     description: string
     full_name: string
     session_id: string
-    role: 'Admin' | 'Student' | 'Lecturer'
+    admin_session_id: string
+    no_pekerja?: string
+    role: 'Student' | 'Lecturer'
 }
 
 export type UserResponse = User[];
@@ -17,38 +19,34 @@ export interface AppStorage {
     data: null
 }
 
-/**
- * Performs an admin login using the provided session ID.
- * @param {string} username - The username for authentication.
- * @param {string} password - The password for authentication.
- * @returns A Promise that resolves to the user authentication data.
- */
-export async function adminLogin(username: string, password: string) {
+export async function adminLogin(user: User): Promise<string> {
     const adminAuthURLbase = "http://web.fc.utm.my/ttms/auth-admin.php"
 
     try {
         //login first
-        const user = await login(username, password)
+        // const user = await login(username, password)
 
-        if(!user) return;
+        // if(!user) return;
 
-        const adminAuthParams = { 'session_id': user[0].session_id }
+        const adminAuthParams = { 'session_id': user.session_id }
         const adminAuthGetData = new URLSearchParams(adminAuthParams).toString()
 
         const response = await fetch(adminAuthURLbase + '?' + adminAuthGetData)
         const data = await response.json()
         console.log(data)
         const auth = data as UserResponse
-        const appStorage: AppStorage = { user_auth: { ...auth[0], role: "Admin" }, data: null }
-        sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
-        console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
-        return auth
+        // const appStorage: AppStorage = { user_auth: { ...auth[0], role: "Admin" }, data: null }
+        // sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
+        // console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
+        return auth[0].session_id
     } catch (error) {
         redirect({
             to: "/login",
         })
         console.error("Admin login error!")
     }
+
+    return ""
 }
 
 /**
@@ -66,7 +64,12 @@ export async function login(username: string, password: string) {
         const data = await response.json()
         console.log(data)
         const auth = data as UserResponse
-        const appStorage: AppStorage = { user_auth: { ...auth[0], role: "Student" }, data: null }
+        //login as admin
+        const adminSessionId = await adminLogin(auth[0])
+
+        const role = auth[0].no_pekerja ? "Lecturer" : "Student"
+        const appStorage: AppStorage = { user_auth: { ...auth[0], admin_session_id: adminSessionId, role }, data: null }
+
         sessionStorage.setItem("web_fc_utm_my_ttms", JSON.stringify(appStorage))
         console.log(sessionStorage.getItem("web_fc_utm_my_ttms"))
         return auth

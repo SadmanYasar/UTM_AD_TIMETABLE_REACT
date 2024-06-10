@@ -9,8 +9,7 @@ import filter from "@mcabreradev/filter"
 const hours = [
     "07:00 AM - 07:50 AM", "08:00 AM - 08:50 AM", "09:00 AM - 09:50 AM", "10:00 AM - 10:50 AM",
     "11:00 AM - 11:50 AM", "12:00 PM - 12:50 PM", "01:00 PM - 01:50 PM", "02:00 PM - 02:50 PM",
-    "03:00 PM - 03:50 PM", "04:00 PM - 04:50 PM", "05:00 PM - 05:50 PM", "06:00 PM - 06:50 PM",
-    "07:00 PM - 07:50 PM", "08:00 PM - 08:50 PM", "09:00 PM - 09:50 PM", "10:00 PM - 10:50 PM"
+    "03:00 PM - 03:50 PM", "04:00 PM - 04:50 PM",
 ];
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
@@ -77,7 +76,7 @@ export default function Component() {
         return <div>An error occurred</div>
     }
 
-    const timetableMatrix = Array.from({ length: 16 }, () => Array(7).fill(''));
+    const timetableMatrix = Array.from({ length: 10 }, () => Array(7).fill(''));
 
     times?.forEach((timetable) => {
         timetable?.forEach((entry) => {

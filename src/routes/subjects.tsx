@@ -3,21 +3,20 @@ import { Button } from "@/components/ui/atoms/button"
 import LoadingSubjects from "@/components/ui/loading/subjects_loading"
 import { SubjectCard } from "@/components/ui/molecules/subjectCard"
 import { getUser, isAuthenticated, isFilterEmpty, newfilterQuery } from "@/lib/utils"
-import { getSubjectsByStudentMatric } from "@/services/pelajar_subjek"
+import { StudentSubjectResponse, getSubjectsByStudentMatric } from "@/services/pelajar_subjek"
 import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import filter from '@mcabreradev/filter';
 import Dropdowns from "@/components/ui/molecules/dropdowns"
+import { LecturerSubjectResponse, getSubjectsByLecturer } from "@/services/pensyarah_subjek"
 
 export interface Filter {
     sesi?: string;
     semester?: number;
-    tahun_kursus?: number;
     kod_kursus?: string;
     kod_subjek?: string;
     nama_subjek?: string;
-    status?: string;
     seksyen?: number;
 }
 
@@ -41,7 +40,17 @@ export const Route = createFileRoute('/subjects')({
 export default function Component() {
     const { data, error, isLoading, refetch } = useQuery({
         queryKey: ['subjects'],
-        queryFn: () => getSubjectsByStudentMatric(getUser()?.user_auth?.login_name),
+        queryFn: async () => {
+            const user = getUser();
+
+            if (user?.user_auth.role === 'Lecturer' && user?.user_auth.no_pekerja) {
+                const lecturerSubjects = await getSubjectsByLecturer(user?.user_auth.no_pekerja);
+                return lecturerSubjects as LecturerSubjectResponse;
+            }
+
+            const studentSubjects = await getSubjectsByStudentMatric(user?.user_auth.login_name);
+            return studentSubjects as StudentSubjectResponse;
+        },
     })
 
     const [filterQuery, setFilter] = useState<Filter>({
@@ -73,16 +82,20 @@ export default function Component() {
 
     return (
         <>
-            {/* Mobile Header */}
-            <h1 className="text-2xl font-bold my-4 block md:hidden text-center">Subjects</h1>
-
+            <div className="container mx-auto">
+                <div className="flex items-center gap-2">
+                    <div className="grid items-center grid-rows-2 gap-1">
+                        <h1 className="text-2xl font-bold tracking-tighter">Subjects</h1>
+                    </div>
+                </div>
+            </div>
             <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
             <BentoGrid>
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
                 ))}
                 {filteredData?.length === 0 && (
-                    <div className="col-span-6 text-center dark:text-gray-300 font-bold">
+                    <div className="col-span-6 font-bold text-center dark:text-gray-300">
                         No subjects found
                     </div>
                 )}

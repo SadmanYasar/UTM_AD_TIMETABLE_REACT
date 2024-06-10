@@ -293,8 +293,7 @@ const response = [
 export type LecturerSubjectResponse = LecturerSubject[]
 export interface LecturerSubject {
     no_pekerja: number
-    bil_subjek: number
-    bil_seksyen: number
+    bil_pelajar: number
     nama_subjek: string
     sesi: string
     semester: number
@@ -305,10 +304,10 @@ export interface LecturerSubject {
 
 /**
  * Fetches the list of subjects for a lecturer.
- * @param {number} no_pekerja - The lecturer's staff ID.
+ * @param {string} no_pekerja - The lecturer's staff ID.
  * @returns {Promise<LecturerSubjectResponse | undefined>} - A promise that resolves with the lecturer's subjects.
  */
-export async function getSubjectsByLecturer(no_pekerja: number): Promise<LecturerSubjectResponse | undefined> {
+export async function getSubjectsByLecturer(no_pekerja: string): Promise<LecturerSubjectResponse | undefined> {
     const subjectParams = { entity: 'pensyarah_subjek', no_pekerja: no_pekerja.toString() };
     const subjectQuery = new URLSearchParams(subjectParams).toString();
 

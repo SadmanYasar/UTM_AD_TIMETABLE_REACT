@@ -2,13 +2,13 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from ".
 
 export default function SessionSemesterLoadingTable() {
     return (
-        <div className="container mx-auto py-10">
+        <div className="container py-10 mx-auto">
             <div className="flex items-center gap-2">
-                <div className="grid grid-rows-2 items-center gap-1">
-                    <h1 className="text-2xl font-bold tracking-tighter">Session Semester</h1>
+                <div className="grid items-center grid-rows-2 gap-1">
+                    <h1 className="text-2xl font-bold tracking-tighter">Loading</h1>
                 </div>
             </div>
-            <Table className="rounded-md border">
+            <Table className="border rounded-md">
                 <TableHeader>
                     <TableRow>
                         <TableHead align="center">Semester</TableHead>

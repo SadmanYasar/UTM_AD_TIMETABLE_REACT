@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Filter, FilterKeys } from "../../../routes/subjects";
 import { Button } from "../atoms/button";
 import Select from 'react-select';
+import { LecturerSubjectResponse } from "@/services/pensyarah_subjek";
 
 export type Dropdowns = {
     key: FilterKeys;
@@ -13,7 +14,7 @@ export type Dropdowns = {
 type DropdownsProps = {
     filterQuery: Filter;
     setFilter: (filter: Filter) => void;
-    data: StudentSubjectResponse | undefined;
+    data: StudentSubjectResponse | LecturerSubjectResponse | undefined;
 };
 
 const dropdowns: Dropdowns = [
@@ -46,11 +47,11 @@ export default function Dropdowns({ filterQuery, setFilter, data }: DropdownsPro
                 animate={{ opacity: 1, height: filterOpen ? "auto" : 0 }}
                 className={`px-8 md:px-0 flex flex-wrap gap-4 justify-center my-4 max-w-5xl w-full mx-auto ${filterOpen ? '' : 'hidden'}`}
             >
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-wrap justify-center gap-4">
                     {dropdowns.map((dropdown) => (
                         // <select
                         //     key={dropdown.key}
-                        //     className="w-full md:w-auto px-4 py-2 rounded-md border border-gray-300 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-white"
+                        //     className="w-full px-4 py-2 border border-gray-300 rounded-md md:w-auto dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-900 dark:text-white"
                         //     value={filterQuery[dropdown.key]}
                         //     onChange={(e) =>
                         //         setFilter({ ...filterQuery, [dropdown.key]: dropdown.key === 'seksyen' || dropdown.key === 'semester' || dropdown.key === 'tahun_kursus' ? parseInt(e.target.value) || 0 : e.target.value || "" })
@@ -67,7 +68,7 @@ export default function Dropdowns({ filterQuery, setFilter, data }: DropdownsPro
                         //         ))}
                         // </select>
                         <Select
-                            className="w-full md:w-auto px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
+                            className="w-full px-4 py-2 rounded-md md:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
                             classNamePrefix="select"
                             isSearchable={true}
                             name="subjects"

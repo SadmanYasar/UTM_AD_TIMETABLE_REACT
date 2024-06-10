@@ -14,18 +14,13 @@ export const Route = createFileRoute('/login')({
 export default function Component() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [role, setRole] = useState('Student')
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         try {
-            if (role === 'Student') {
-                await login(username, password)
-            } else if (role === 'Admin') {
-                await adminLogin(username, password)
-            }
+            await login(username, password)
             //navigate to "/profile" route
             navigate({
                 to: '/profile'
@@ -66,17 +61,6 @@ export default function Component() {
                                 </label>
                                 <Input id="password" placeholder="Your password" className="dark:text-black" value={password} onChange={(e) => setPassword(e.target.value)} type="password" required />
                             </div>
-                            {/* Two radio buttons to choose if Student or Admin, required fields */}
-                            <RadioGroup className="flex flex-row text-black" defaultValue={role} value={role} onValueChange={(value) => setRole(value)}>
-                                <div className="space-x-2">
-                                    <RadioGroupItem value="Student" id="r1" className="text-gray-700 dark:text-black" />
-                                    <Label htmlFor="r1">Student</Label>
-                                </div>
-                                <div className="space-x-2">
-                                    <RadioGroupItem value="Admin" id="r2" className="text-gray-700 dark:text-black" />
-                                    <Label htmlFor="r2">Admin</Label>
-                                </div>
-                            </RadioGroup>
                             <Button type="submit" className="w-full dark:text-white dark:bg-navBg">Submit</Button>
                         </form>
                     </div>

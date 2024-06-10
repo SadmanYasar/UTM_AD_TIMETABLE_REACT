@@ -57,10 +57,10 @@ export default function Component() {
                         <div className="text-sm font-medium text-gray-500">Description</div>
                         <div className="font-medium">{data?.user_auth.description}</div>
                     </div>
-                    <div className="grid gap-0.5">
+                    {/* <div className="grid gap-0.5">
                         <div className="text-sm font-medium text-gray-500">Role</div>
                         <div className="font-medium">{data?.user_auth.role}</div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* A button that calls a function */}
