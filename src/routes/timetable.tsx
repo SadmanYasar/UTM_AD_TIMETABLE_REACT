@@ -1,10 +1,11 @@
 import { createFileRoute, redirect } from "@tanstack/react-router"
-import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from "@/components/ui/atoms/table"
+import { TableHead, TableRow, TableHeader, TableCell, Table, TableBody } from "@/components/ui/atoms/table"
 import { getUser, isAuthenticated } from "@/lib/utils"
 import { StudentSubject, getSubjectsByStudentMatric } from "@/services/pelajar_subjek"
 import { useQuery } from "@tanstack/react-query"
 import { getTimeTable } from "@/services/timetable"
 import filter from "@mcabreradev/filter"
+import { useState, useEffect } from "react"
 
 const hours = [
     "07:00 AM - 07:50 AM", "08:00 AM - 08:50 AM", "09:00 AM - 09:50 AM", "10:00 AM - 10:50 AM",
@@ -87,6 +88,56 @@ export default function Component() {
             }
         });
     });
+
+    //use event listener to detect mobile
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    if (isMobile) {
+        return (
+            <div className="container py-10 mx-auto">
+                <div className="flex items-center gap-2">
+                    <div className="grid items-center grid-rows-2 gap-1">
+                        <h1 className="text-2xl font-bold tracking-tighter">Timetable</h1>
+                    </div>
+                </div>
+                <div className="overflow-auto border rounded-md">
+                    {days.map((day, dayIndex) => (
+                        <div key={dayIndex} className="p-2">
+                            <h2 className="text-lg font-bold">{day}</h2>
+                            {times?.map((timetable, timetableIndex) => {
+                                const entry = timetable?.find((entry) => entry.hari === dayIndex + 1);
+                                if (entry) {
+                                    const { kod_subjek, masa, hari, ruang } = entry;
+                                    //retrieve the first 8 characters
+                                    const startTime = hours[masa - 1].slice(0, 8);
+                                    //retrieve the last 8 characters
+                                    const endTime = hours[masa].slice(11, 19);
+                                    return (
+                                        <div key={timetableIndex} className="mb-2">
+                                            {kod_subjek} - ({days[hari - 1]}, {ruang.nama_ruang_singkatan ? ruang.nama_ruang_singkatan : '???'}, {startTime} - {endTime} )
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            })}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="container py-10 mx-auto">
