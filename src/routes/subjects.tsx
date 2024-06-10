@@ -90,15 +90,14 @@ export default function Component() {
                 </div>
             </div>
             <Dropdowns data={data} filterQuery={filterQuery} setFilter={setFilter} />
+            <div className="py-4 font-bold text-center dark:text-gray-300">
+                Total Subjects Found: {filteredData?.length}
+            </div>
             <BentoGrid>
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
                 ))}
-                {filteredData?.length === 0 && (
-                    <div className="col-span-6 font-bold text-center dark:text-gray-300">
-                        No subjects found
-                    </div>
-                )}
+                {/* Display total number of subjects */}
             </BentoGrid>
         </>
     )

@@ -68,15 +68,11 @@ export function SubjectCard({
                     {role === "Student" && (
                         <>
                             <p className="relative mb-4 text-base font-normal text-slate-500 z-1">
-                                {kod_subjek} Section {seksyen}
+                                {kod_subjek} - Section {seksyen} - Semester {semester}
                             </p>
 
                             <p className="relative mb-4 text-base font-normal text-slate-500 z-1">
-                                {kod_fakulti} - {sesi}
-                            </p>
-
-                            <p className="relative mb-4 text-base font-normal text-slate-500 z-1">
-                                Semester {semester}
+                                {kod_kursus} - {sesi}
                             </p>
                         </>
                     )}
