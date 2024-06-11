@@ -30,6 +30,21 @@ export const Route = createFileRoute('/timetable')({
 })
 
 export default function Component() {
+    //use event listener to detect mobile
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const { data: subjects } = useQuery({
         queryKey: ['subjects'],
         queryFn: () => getSubjectsByStudentMatric(getUser()?.user_auth?.login_name),
@@ -88,21 +103,6 @@ export default function Component() {
             }
         });
     });
-
-    //use event listener to detect mobile
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 768) {
-                setIsMobile(true);
-            } else {
-                setIsMobile(false);
-            }
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     if (isMobile) {
         return (
