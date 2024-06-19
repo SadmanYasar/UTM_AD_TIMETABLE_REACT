@@ -109,7 +109,7 @@ export default function Component() {
             <div className="container py-10 mx-auto">
                 <div className="flex items-center gap-2">
                     <div className="grid items-center grid-rows-2 gap-1">
-                        <h1 className="text-2xl font-bold tracking-tighter">Timetable</h1>
+                        <h1 className="text-2xl font-bold tracking-tighter">Timetable 📅</h1>
                     </div>
                 </div>
                 <div className="overflow-auto border rounded-md">
@@ -125,9 +125,18 @@ export default function Component() {
                                     //retrieve the last 8 characters
                                     const endTime = hours[masa].slice(11, 19);
                                     return (
-                                        <div key={timetableIndex} className="mb-2">
-                                            {kod_subjek} - ({days[hari - 1]}, {ruang.nama_ruang_singkatan ? ruang.nama_ruang_singkatan : '???'}, {startTime} - {endTime} )
-                                        </div>
+                                        <>
+                                            <div key={timetableIndex} className="grid grid-cols-2 gap-2 pb-2">
+                                                <div className="flex items-center">
+                                                    <span>{kod_subjek}</span>
+                                                    <span className="ml-2">{ruang.nama_ruang_singkatan ? ruang.nama_ruang_singkatan : '???'}</span>
+                                                </div>
+                                                <div className="text-black dark:text-gray-300 text-md">
+                                                    {startTime} - {endTime}
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        </>
                                     );
                                 }
                                 return null;

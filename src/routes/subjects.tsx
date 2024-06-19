@@ -75,7 +75,7 @@ export default function Component() {
         return (
             <>
                 <div>An error occurred</div>
-                <Button onClick={() => refetch()}>Retry</Button>
+                <Button onClick={() => redirect({ to: '/login' })}>Login</Button>
             </>
         )
     }
@@ -97,7 +97,6 @@ export default function Component() {
                 {filteredData?.map((subject, index) => (
                     <SubjectCard key={index} {...subject} />
                 ))}
-                {/* Display total number of subjects */}
             </BentoGrid>
         </>
     )
