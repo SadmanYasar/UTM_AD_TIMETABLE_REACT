@@ -7,6 +7,7 @@ import {
 import { motion, useScroll } from 'framer-motion';
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "../atoms/modeToggle";
+import { getUser } from "@/lib/utils";
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -66,10 +67,18 @@ export default function Header() {
                     >
                         Session/Semester
                     </Link>{' '}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                    >
-                        Timetable
-                    </Link>{' '}
+                    {getUser()?.user_auth.role === 'Lecturer' && (
+                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
+                        >
+                            Timetable
+                        </Link>
+                    )}
+                    {getUser()?.user_auth.role === 'Student' && (
+                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
+                        >
+                            Timetable
+                        </Link>
+                    )}
                     <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
                     >
                         Subjects
@@ -101,10 +110,18 @@ export default function Header() {
                                 >
                                     Session/Semester
                                 </Link>{' '}
-                                <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                >
-                                    Timetable
-                                </Link>{' '}
+                                {getUser()?.user_auth.role === 'Student' && (
+                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
+                                    >
+                                        Timetable
+                                    </Link>
+                                )}
+                                {getUser()?.user_auth.role === 'Lecturer' && (
+                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
+                                    >
+                                        Timetable
+                                    </Link>
+                                )}
                                 <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
                                 >
                                     Subjects

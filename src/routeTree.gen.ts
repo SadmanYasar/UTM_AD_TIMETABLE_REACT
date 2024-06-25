@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TimetablepensyarahImport } from './routes/timetable_pensyarah'
 import { Route as TimetableImport } from './routes/timetable'
 import { Route as SubjectsImport } from './routes/subjects'
 import { Route as SessionsemesterImport } from './routes/session_semester'
@@ -20,6 +21,11 @@ import { Route as AnalysisImport } from './routes/analysis'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TimetablepensyarahRoute = TimetablepensyarahImport.update({
+  path: '/timetable_pensyarah',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const TimetableRoute = TimetableImport.update({
   path: '/timetable',
@@ -109,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimetableImport
       parentRoute: typeof rootRoute
     }
+    '/timetable_pensyarah': {
+      id: '/timetable_pensyarah'
+      path: '/timetable_pensyarah'
+      fullPath: '/timetable_pensyarah'
+      preLoaderRoute: typeof TimetablepensyarahImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -122,6 +135,7 @@ export const routeTree = rootRoute.addChildren({
   SessionsemesterRoute,
   SubjectsRoute,
   TimetableRoute,
+  TimetablepensyarahRoute,
 })
 
 /* prettier-ignore-end */
@@ -138,7 +152,8 @@ export const routeTree = rootRoute.addChildren({
         "/profile",
         "/session_semester",
         "/subjects",
-        "/timetable"
+        "/timetable",
+        "/timetable_pensyarah"
       ]
     },
     "/": {
@@ -161,6 +176,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/timetable": {
       "filePath": "timetable.tsx"
+    },
+    "/timetable_pensyarah": {
+      "filePath": "timetable_pensyarah.tsx"
     }
   }
 }
