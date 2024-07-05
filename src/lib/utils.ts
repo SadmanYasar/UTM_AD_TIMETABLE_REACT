@@ -30,6 +30,31 @@ export function getUser() {
 }
 
 /**
+ * @description
+ * Get the session details of the authenticated user
+ * 
+ * @return {{ session_id: string, admin_session_id: string, role: 'Student' | 'Lecturer' } | null} - Returns session details or null if not authenticated
+ * 
+ * @example
+ * const sessionDetails = getSessionDetails();
+ * if (sessionDetails) {
+ *   // Do something with session details
+ * }
+ */
+export function getSessionDetails() {
+  const user = getUser();
+  if (user) {
+    return {
+      session_id: user.user_auth.session_id,
+      admin_session_id: user.user_auth.admin_session_id,
+      role: user.user_auth.role,
+    };
+  }
+  console.error("No user found in session storage");
+  return null;
+}
+
+/**
  * Checks if the given filter query is empty.
  * @param filterQuery - The filter query object.
  * @returns True if the filter query is empty, false otherwise.

@@ -1,22 +1,18 @@
-import { useState, useEffect } from "react"
-import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react"
-import {
-    Bars3Icon,
-    XMarkIcon
-} from "@heroicons/react/24/outline"
+import { useState, useEffect } from "react";
+import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { motion, useScroll } from 'framer-motion';
 import { Link } from "@tanstack/react-router";
 import { ModeToggle } from "../atoms/modeToggle";
 import { getUser } from "@/lib/utils";
 
 export default function Header() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [hidden, setHidden] = useState(false)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const { scrollY } = useScroll();
 
-    /** this onUpdate function will be called in the `scrollY.onChange` callback **/
     function update() {
-        const previousY = scrollY.getPrevious()
+        const previousY = scrollY.getPrevious();
         if (previousY) {
             if (scrollY?.get() < previousY) {
                 setHidden(false);
@@ -26,15 +22,12 @@ export default function Header() {
         }
     }
 
-    /** add this useEffect hook to return events everytime the scrollY changes **/
     useEffect(() => {
         return scrollY.on('change', update);
     });
 
     const variants = {
-        /** this is the "visible" key and it's respective style object **/
         visible: { opacity: 1, y: 0 },
-        /** this is the "hidden" key and it's respective style object **/
         hidden: { opacity: 0, y: -25 }
     };
 
@@ -47,7 +40,8 @@ export default function Header() {
         >
             <nav
                 className="flex items-center justify-between p-4 mx-auto max-w-7xl lg:px-8"
-                aria-label="Global">
+                aria-label="Global"
+            >
                 <div className="flex lg:hidden">
                     <button
                         type="button"
@@ -59,30 +53,31 @@ export default function Header() {
                     </button>
                 </div>
                 <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/profile" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                    >
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/profile" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
                         Profile
-                    </Link>{' '}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                    >
+                    </Link>
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
                         Session/Semester
-                    </Link>{' '}
+                    </Link>
                     {getUser()?.user_auth.role === 'Lecturer' && (
-                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                        >
+                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
                             Timetable
                         </Link>
                     )}
                     {getUser()?.user_auth.role === 'Student' && (
-                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                        >
+                        <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
                             Timetable
                         </Link>
                     )}
-                    <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline"
-                    >
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
                         Subjects
-                    </Link>{' '}
+                    </Link>
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/lecturers" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
+                        Lecturers
+                    </Link>
+                    <Link onClick={() => setMobileMenuOpen(false)} to="/students" className="block dark:text-white px-3 py-2 -mx-3 text-base font-semibold leading-7 text-black rounded-lg dark:hover:bg-slate-800 hover:underline">
+                        Students
+                    </Link>
                 </PopoverGroup>
                 <ModeToggle />
             </nav>
@@ -102,35 +97,36 @@ export default function Header() {
                     <div className="flow-root mt-6">
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="py-6 space-y-2">
-                                <Link onClick={() => setMobileMenuOpen(false)} to="/profile" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                >
+                                <Link onClick={() => setMobileMenuOpen(false)} to="/profile" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
                                     Profile
-                                </Link>{' '}
-                                <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                >
+                                </Link>
+                                <Link onClick={() => setMobileMenuOpen(false)} to="/session_semester" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
                                     Session/Semester
-                                </Link>{' '}
+                                </Link>
                                 {getUser()?.user_auth.role === 'Student' && (
-                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                    >
+                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
                                         Timetable
                                     </Link>
                                 )}
                                 {getUser()?.user_auth.role === 'Lecturer' && (
-                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                    >
+                                    <Link onClick={() => setMobileMenuOpen(false)} to="/timetable_pensyarah" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
                                         Timetable
                                     </Link>
                                 )}
-                                <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800"
-                                >
+                                <Link onClick={() => setMobileMenuOpen(false)} to="/subjects" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
                                     Subjects
-                                </Link>{' '}
+                                </Link>
+                                <Link onClick={() => setMobileMenuOpen(false)} to="/lecturers" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
+                                    Lecturers
+                                </Link>
+                                <Link onClick={() => setMobileMenuOpen(false)} to="/students" className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-slate-800">
+                                    Students
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </DialogPanel>
             </Dialog>
         </motion.header>
-    )
+    );
 }
